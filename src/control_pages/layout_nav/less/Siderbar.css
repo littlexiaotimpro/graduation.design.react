@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.logo {
+  height: 60px;
+  margin: 30px;
+}
+.logo .avatar {
+  background-image: url("../img/ILogo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.tab-style {
+  display: inline-block;
+  width: 100%;
+}
+a {
+  color: darkgray;
+}
+a:hover,
+a:focus,
+a:active {
+  color: white;
+  text-decoration: none;
+}
+/*# sourceMappingURL=Siderbar.css.map */

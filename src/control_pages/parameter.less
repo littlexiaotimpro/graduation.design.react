@@ -1,0 +1,23 @@
+// 主要的less文 * 用于定义公有的属性或方法
+// 通用的margin * padding
+.margin-padding() {
+  margin: 0;
+  padding: 0;
+}
+
+// 公有的类
+@tabs: tab-style;
+
+// 公有属性
+@a-block: inline-block;
+
+// 定义标签方法 * 在子less文件中直接调用
+.a-tab-style() {
+  //设定a标签的活动属性
+  color: darkgray;
+
+  &:hover, &:focus, &:active {
+    color: white;
+    text-decoration: none;
+  }
+}

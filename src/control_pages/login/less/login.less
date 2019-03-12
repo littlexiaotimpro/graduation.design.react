@@ -1,0 +1,23 @@
+@import "../../parameter";
+
+@login: login-style;
+@width: 100%;
+@height: 70px;
+@form-color: rgba(0, 0, 0, 0.3);
+
+* {
+  .margin-padding();
+}
+
+//#FF7400
+body {
+  background-color: #7109AA;
+}
+
+.@{login} {
+  text-align: center;
+  background-color: @form-color;
+  width: @width;
+  position: fixed;
+  top: 20%;
+}
