@@ -6,6 +6,7 @@ import "./less/Siderbar.css";
 import Navbar from "../navbar/Navbar";
 import Category from "../category/Category";
 import Tags from "../tags/Tags";
+import Media from "../media/Media";
 
 const {
     Header, Content, Footer, Sider,
@@ -116,7 +117,7 @@ class Siderbar extends Component {
                                 <Route path={"/category"} component={Category}/>
                                 <Route path={"/tags"} component={Tags}/>
                                 <Route path={"/book"} component={Navbar}/>
-                                <Route path={"/media"} component={Navbar}/>
+                                <Route path={"/media"} component={Media}/>
                                 <Route path={"/music"} component={Navbar}/>
                                 <Route path={"/article"} component={Navbar}/>
                                 <Route path={"/record"} component={Navbar}/>
