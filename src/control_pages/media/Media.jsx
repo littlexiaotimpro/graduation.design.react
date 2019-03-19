@@ -116,6 +116,18 @@ class Media extends Component {
     }
 
     showDrawer(record) {
+        this.props.form.setFieldsValue({
+            adminid: record.adminid,
+            caption: record.caption,
+            enarticle: record.enarticle,
+            encategory: record.encategory,
+            enmedia: record.enmedia,
+            ennav: record.ennav,
+            entag: record.entag,
+            showtime: record.showtime,
+            status: record.status,
+            summary: record.summary
+        });
         this.setState({
             visible: true,
             record: record,
