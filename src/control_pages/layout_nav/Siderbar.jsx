@@ -7,6 +7,8 @@ import Navbar from "../navbar/Navbar";
 import Category from "../category/Category";
 import Tags from "../tags/Tags";
 import Media from "../media/Media";
+import Book from "../book/Book";
+import Music from "../music/Music";
 
 const {
     Header, Content, Footer, Sider,
@@ -116,9 +118,9 @@ class Siderbar extends Component {
                                 <Route exact path={"/navbar"} component={Navbar}/>
                                 <Route path={"/category"} component={Category}/>
                                 <Route path={"/tags"} component={Tags}/>
-                                <Route path={"/book"} component={Navbar}/>
+                                <Route path={"/book"} component={Book}/>
                                 <Route path={"/media"} component={Media}/>
-                                <Route path={"/music"} component={Navbar}/>
+                                <Route path={"/music"} component={Music}/>
                                 <Route path={"/article"} component={Navbar}/>
                                 <Route path={"/record"} component={Navbar}/>
                             </div>

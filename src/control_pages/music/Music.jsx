@@ -1,16 +1,16 @@
 import React, {Component} from "react";
 import moment from "moment";
 import axios from "axios";
-import {Button, Table, Select, Drawer, Form, Col, Row, Input, Upload, Modal, Icon} from 'antd';
-import "./less/Media.css";
+import {Button, Table, Select, Drawer, Form, Col, Row, Input, Upload, Modal, Icon, Tag} from 'antd';
+import "./less/music.css";
 
 const Option = Select.Option;
 
-class Media extends Component {
+class Music extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            medias: [],
+            musics: [],
             categories: [],
             chooseCate: "",
             navbars: [],
@@ -23,9 +23,9 @@ class Media extends Component {
             fileList: []
         };
         this.columns = [{
-            title: 'enMedia',
-            dataIndex: 'enmedia',
-            width: 100,
+            title: 'enMusic',
+            dataIndex: 'enmusic',
+            width: 130,
         }, {
             title: 'enArticle',
             dataIndex: 'enarticle',
@@ -54,7 +54,7 @@ class Media extends Component {
             width: 130,
             render: (data) => (
                 this.state.tags.map(item => (
-                    item.entag === data ? item.caption : null
+                    item.entag === data ? <Tag color={'volcano'} key={item.entag}>{item.caption}</Tag> : null
                 ))
             )
         }, {
@@ -62,8 +62,8 @@ class Media extends Component {
             dataIndex: 'adminid',
             width: 130,
         }, {
-            title: 'IMGMedia',
-            dataIndex: 'imgmedia',
+            title: 'IMGMusic',
+            dataIndex: 'imgmusic',
             width: 130,
             render: (data, imgs) => <img src={data} alt={imgs.caption} style={{width: 97}}/>
         }, {
@@ -71,8 +71,8 @@ class Media extends Component {
             dataIndex: 'caption',
             width: 130,
         }, {
-            title: 'ShowTime',
-            dataIndex: 'showtime',
+            title: 'Author',
+            dataIndex: 'author',
             width: 130,
         }, {
             title: 'Summary',
@@ -84,8 +84,8 @@ class Media extends Component {
             width: 130,
             render: (data, key) => <Button type="danger" onClick={() => {
                 const _this = this;
-                axios.post("http://localhost:8080/media/delete", {
-                    enmedia: key.enmedia,
+                axios.post("http://localhost:8080/music/delete", {
+                    enmusic: key.enmusic,
                     status: key.status === 1 ? 0 : 1
                 }).then(function (response) {
                     alert(response.data.msg);
@@ -123,12 +123,12 @@ class Media extends Component {
             caption: record.caption,
             enarticle: record.enarticle,
             encategory: record.encategory,
-            enmedia: record.enmedia,
+            enmusic: record.enmusic,
             ennav: record.ennav,
             entag: record.entag,
-            showtime: record.showtime,
+            author: record.author,
             status: record.status,
-            summary: record.summary
+            summary: record.summary,
         });
         this.setState({
             visible: true,
@@ -139,7 +139,7 @@ class Media extends Component {
                 uid: '-1',
                 name: record.caption,
                 status: 'done',
-                url: record.imgmedia,
+                url: record.imgmusic,
             }]
         });
     };
@@ -162,15 +162,15 @@ class Media extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 _this.state.fileList.map((img) => {
-                    values.imgmedia = img.response;
+                    values.imgmusic = img.response;
                     return null;
                 })
-                const newData = [...this.state.medias];
-                let key = values.enmedia;
+                const newData = [...this.state.musics];
+                let key = values.enmusic;
                 const index = newData.findIndex(item => key === item.key);
                 if (index > -1) {
                     // update
-                    axios.post("http://localhost:8080/media/update", values)
+                    axios.post("http://localhost:8080/music/update", values)
                         .then(function (response) {
                             _this.setState({
                                 visible: false,
@@ -184,7 +184,7 @@ class Media extends Component {
                     })
                 } else {
                     // save
-                    axios.post("http://localhost:8080/media/save", values)
+                    axios.post("http://localhost:8080/music/save", values)
                         .then(function (response) {
                             _this.setState({
                                 visible: false,
@@ -223,19 +223,19 @@ class Media extends Component {
 
     getData() {
         const _this = this;
-        axios.all([axios.get("http://localhost:8080/media/control"),
+        axios.all([axios.get("http://localhost:8080/music/control"),
             axios.get("http://localhost:8080/category/caption"),
             axios.get("http://localhost:8080/navbar/caption"),
             axios.get("http://localhost:8080/tags/caption")])
-            .then(axios.spread(function (medias, cate, nav, tag) {
+            .then(axios.spread(function (musics, cate, nav, tag) {
                 // console.log(medias);
                 // console.log(cate);
                 // console.log(tag);
                 // console.log(nav);
                 let values = [];
-                for (let i = 0; i < medias.data.length; i++) {
-                    medias.data[i].key = medias.data[i].enmedia;
-                    values.push(medias.data[i]);
+                for (let i = 0; i < musics.data.length; i++) {
+                    musics.data[i].key = musics.data[i].enmusic;
+                    values.push(musics.data[i]);
                 }
                 let cates = [];
                 for (let i = 0; i < cate.data.length; i++) {
@@ -253,7 +253,7 @@ class Media extends Component {
                     navs.push(nav.data[i]);
                 }
                 _this.setState({
-                    medias: values,
+                    musics: values,
                     categories: cates,
                     navbars: navs,
                     tags: tagss,
@@ -287,11 +287,15 @@ class Media extends Component {
         return (<div>
             <Table
                 bordered
-                dataSource={this.state.medias}
+                dataSource={this.state.musics}
                 columns={this.columns}
-                scroll={{x: 1820, y: 320}}
+                // pagination={{
+                //     pageSize: 10,
+                //     onChange: this.cancel,
+                // }}
+                scroll={{x: 1900, y: 320}}
             />
-            {this.state.medias.length === 0 ? saveButton : null}
+            {this.state.musics.length === 0 ? saveButton : null}
             <Drawer
                 title="Create or Update"
                 width={420}
@@ -306,10 +310,10 @@ class Media extends Component {
                 <Form layout="vertical" hideRequiredMark>
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Form.Item label="enMedia">
-                                {getFieldDecorator('enmedia', {
+                            <Form.Item label="enMusic">
+                                {getFieldDecorator('enmusic', {
                                     rules: [{required: true, message: '请输入主键'}],
-                                    initialValue: this.state.record.enmedia,
+                                    initialValue: this.state.record.enmusic,
                                 })(<Input placeholder="请输入主键"/>)}
                             </Form.Item>
                         </Col>
@@ -344,7 +348,7 @@ class Media extends Component {
                         <Col span={8}>
                             <Form.Item label="enCategory">
                                 {getFieldDecorator('encategory', {
-                                    rules: [{required: true, message: '选择类别'}],
+                                    rules: [{required: false, message: '选择类别'}],
                                     initialValue: this.state.record.encategory,
                                 })(
                                     <Select placeholder="选择类别" onChange={(value) => {
@@ -384,11 +388,11 @@ class Media extends Component {
                             {/*</div>*/}
                             <div className="clearfix">
                                 <Upload
-                                    action="http://localhost:8080/media/img"
+                                    action="http://localhost:8080/music/img"
                                     listType="picture-card"
                                     data={{
                                         category: this.state.record.encategory,
-                                        imgmedia: this.file
+                                        imgmusic: this.file
                                     }}
                                     fileList={fileList}
                                     onPreview={this.handlePreview}
@@ -422,11 +426,11 @@ class Media extends Component {
                     </Row>
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Form.Item label="ShowTime">
-                                {getFieldDecorator('showtime', {
-                                    rules: [{required: true, message: '输入上映时间'}],
-                                    initialValue: this.state.record.showtime,
-                                })(<Input placeholder="输入上映时间"/>)}
+                            <Form.Item label="Author">
+                                {getFieldDecorator('author', {
+                                    rules: [{required: true, message: '输入作者'}],
+                                    initialValue: this.state.record.author,
+                                })(<Input placeholder="输入作者"/>)}
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -483,4 +487,4 @@ class Media extends Component {
     }
 }
 
-export default Form.create()(Media);
+export default Form.create()(Music);
