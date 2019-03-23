@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import {Layout, Menu, Icon, Avatar} from 'antd';
-import "bootstrap/dist/css/bootstrap.css";
 import "./less/Siderbar.css";
 import Navbar from "../navbar/Navbar";
 import Category from "../category/Category";
@@ -58,49 +57,49 @@ class Siderbar extends Component {
                             <Menu.Item key="1">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "Navbar")} className="nav-text">
-                                    <Link className="tab-style" to={"navbar"}>Navbar</Link>
+                                    <Link className="tab-style" to={"/control/navbar"}>Navbar</Link>
                                 </span>
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "Category")} className="nav-text">
-                                    <Link className="tab-style" to={"category"}>Category</Link>
+                                    <Link className="tab-style" to={"/control/category"}>Category</Link>
                                 </span>
                             </Menu.Item>
                             <Menu.Item key="3">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "Tags")} className="nav-text">
-                                    <Link className="tab-style" to={"tags"}>Tags</Link>
+                                    <Link className="tab-style" to={"/control/tags"}>Tags</Link>
                                 </span>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "Book")} className="nav-text">
-                                    <Link className="tab-style" to={"book"}>Book</Link>
+                                    <Link className="tab-style" to={"/control/book"}>Book</Link>
                                 </span>
                             </Menu.Item>
                             <Menu.Item key="5">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "Media")} className="nav-text">
-                                    <Link className="tab-style" to={"media"}>Media</Link>
+                                    <Link className="tab-style" to={"/control/media"}>Media</Link>
                                 </span>
                             </Menu.Item>
                             <Menu.Item key="6">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "Music")} className="nav-text">
-                                    <Link className="tab-style" to={"music"}>Music</Link>
+                                    <Link className="tab-style" to={"/control/music"}>Music</Link>
                                 </span>
                             </Menu.Item>
                             <Menu.Item key="7">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "Article")} className="nav-text">
-                                    <Link className="tab-style" to={"music"}>Article</Link>
+                                    <Link className="tab-style" to={"/control/article"}>Article</Link>
                                 </span>
                             </Menu.Item>
                             <Menu.Item key="8">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "Record")} className="nav-text">
-                                    <Link className="tab-style" to={"record"}>Record</Link>
+                                    <Link className="tab-style" to={"/control/record"}>Record</Link>
                                 </span>
                             </Menu.Item>
                         </Menu>
@@ -115,14 +114,14 @@ class Siderbar extends Component {
                                 background: '#fff',
                                 textAlign: 'center',
                             }}>
-                                <Route exact path={"/navbar"} component={Navbar}/>
-                                <Route path={"/category"} component={Category}/>
-                                <Route path={"/tags"} component={Tags}/>
-                                <Route path={"/book"} component={Book}/>
-                                <Route path={"/media"} component={Media}/>
-                                <Route path={"/music"} component={Music}/>
-                                <Route path={"/article"} component={Navbar}/>
-                                <Route path={"/record"} component={Navbar}/>
+                                <Route exact path={"/control/navbar"} component={Navbar}/>
+                                <Route path={"/control/category"} component={Category}/>
+                                <Route path={"/control/tags"} component={Tags}/>
+                                <Route path={"/control/book"} component={Book}/>
+                                <Route path={"/control/media"} component={Media}/>
+                                <Route path={"/control/music"} component={Music}/>
+                                <Route path={"/control/article"} component={Navbar}/>
+                                <Route path={"/control/record"} component={Navbar}/>
                             </div>
                         </Content>
                         <Footer style={{textAlign: 'center'}}>

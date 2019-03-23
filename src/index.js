@@ -9,7 +9,7 @@ class App extends React.Component {
         return <Router>
             <div>
                 {/*<Route path={"/"} component={Login}/>*/}
-                <Route path={"/"} component={controlRoute}/>
+                <Route path={"/control/login"} component={controlRoute}/>
             </div>
         </Router>
     }

@@ -209,7 +209,9 @@ class Category extends Component {
                 response.data[i].key = response.data[i].encategory;
                 values.push(response.data[i]);
             }
-            values.push({key: "none"});
+            if (response.data.length <= 0) {
+                values.push({key: "none"});
+            }
             _this.setState({
                 category: values
             })

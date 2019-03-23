@@ -222,7 +222,9 @@ class Navbar extends Component {
                 response.data[i].key = response.data[i].ennav;
                 values.push(response.data[i]);
             }
-            values.push({key: "none"});
+            if (response.data.length <= 0) {
+                values.push({key: "none"});
+            }
             _this.setState({
                 navbar: values
             })

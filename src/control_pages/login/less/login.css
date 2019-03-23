@@ -3,7 +3,39 @@
   padding: 0;
 }
 body {
-  background-color: #7109AA;
+  background: #fff;
+}
+.header-box {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+}
+.header-box .btn-hover {
+  border: 1px solid black;
+  outline-style: none;
+  color: black;
+}
+.header-box .btn-hover:hover {
+  background: black;
+  color: #fff;
+}
+.nav-logo {
+  width: 200px;
+  height: 52px;
+  margin: 21px 0 16px 0;
+  float: left;
+}
+.login-btn {
+  width: 65px;
+  height: 52px;
+  margin: 21px 0 16px 0;
+  float: right;
+}
+.box-content {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 200px 0 150px 0;
 }
 .login-style {
   text-align: center;

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Form, Icon, Input, Button} from 'antd';
-import "bootstrap/dist/css/bootstrap.css";
+import {Form, Icon, Input, Button, Layout, Modal,} from 'antd';
 import "./less/login.css";
 import axios from "axios";
-import $ from "jquery";
 // import PropTypes from 'prop-types';
 
 // import {BrowserRouter as Router, Route, Link, Switch, Redirect} from "react-router-dom";
+
+const {Header, Content} = Layout;
 
 function hasErrors(fieldsError) {
     return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -17,7 +17,8 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            message: {}
+            message: {},
+            visible: false,
         }
     }
 
@@ -26,12 +27,25 @@ class Login extends Component {
         this.props.form.validateFields();
     }
 
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+
+    handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
+
     handleSubmit = (e) => {
         const _this = this;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                // console.log('Received values of form: ', values);
+                console.log(values);
                 axios.post("http://localhost:8080/admin/login", {
                     account: values.account,
                     password: values.password
@@ -41,10 +55,9 @@ class Login extends Component {
                         message: response.data
                     })
                     if (response.data.code === 1) {
-                        _this.props.history.push("/manage");
+                        _this.props.history.push("/control/manage");
                     } else {
-                        let v = $(".test").text();
-                        alert(response.data.msg + v);
+                        alert(response.data.msg);
                     }
                 }).catch(function (error) {
                     console.log(error);
@@ -54,49 +67,80 @@ class Login extends Component {
     }
 
     render() {
-        const {
-            getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
-        } = this.props.form;
-
-        // Only show error after a field is touched.
-        const accountError = isFieldTouched('account') && getFieldError('account');
+        const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,} = this.props.form
+        const userNameError = isFieldTouched('account') && getFieldError('account');
         const passwordError = isFieldTouched('password') && getFieldError('password');
         return (
             <div>
-                <div className={"test"}>编程小白 毕设管理</div>
-                <Form className="login-style" layout="inline" onSubmit={this.handleSubmit}>
-                    <Form.Item
-                        validateStatus={accountError ? 'error' : ''}
-                        help={accountError || ''}
-                    >
-                        {getFieldDecorator('account', {
-                            rules: [{required: true, message: 'Please input your account!'}],
-                        })(
-                            <Input prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                   placeholder="Account"/>
-                        )}
-                    </Form.Item>
-                    <Form.Item
-                        validateStatus={passwordError ? 'error' : ''}
-                        help={passwordError || ''}
-                    >
-                        {getFieldDecorator('password', {
-                            rules: [{required: true, message: 'Please input your Password!'}],
-                        })(
-                            <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>} type="password"
-                                   placeholder="Password"/>
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            disabled={hasErrors(getFieldsError())}
+                <Layout>
+                    <Header style={{background: "#fff", height: 80, position: 'fixed', zIndex: 1, width: '100%'}}>
+                        <div className="header-box">
+                            <div className="nav-logo">
+                                <h2>控制台</h2>
+                            </div>
+                            <div className="login-btn">
+                                <Button className={"btn-hover"} onClick={this.showModal}>
+                                    log in
+                                </Button>
+                            </div>
+                        </div>
+                    </Header>
+                    <Content style={{marginTop: 80, background: "#fff"}}>
+                        <div className={"box-content"}>
+                            <p style={{fontSize: "3.2em"}}>React + Ant Design</p>
+                            <p style={{marginTop: -25, fontSize: "1.3em"}}> Graduation Design 管理端</p>
+                            <Button style={{
+                                marginTop: 15,
+                                background: "black",
+                                color: "#fff",
+                                width: 120,
+                                borderRadius: 20,
+                            }}
+                                    size={'large'}>文档</Button>
+                        </div>
+                    </Content>
+                </Layout>
+                <Modal
+                    title="Administrator Login"
+                    visible={this.state.visible}
+                    footer={null}
+                    onCancel={this.handleCancel}
+                >
+                    <Form onSubmit={this.handleSubmit} className="login-form">
+                        <Form.Item
+                            validateStatus={userNameError ? 'error' : ''}
+                            help={userNameError || ''}
                         >
-                            Log in
-                        </Button>
-                    </Form.Item>
-                </Form>
+                            {getFieldDecorator('account', {
+                                rules: [{required: true, message: '请输入管理员账号!'}],
+                            })(
+                                <Input prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                                       placeholder="Account"/>
+                            )}
+                        </Form.Item>
+                        <Form.Item
+                            validateStatus={passwordError ? 'error' : ''}
+                            help={passwordError || ''}
+                        >
+                            {getFieldDecorator('password', {
+                                rules: [{required: true, message: '请输入管理员密码!'}],
+                            })(
+                                <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>} type="password"
+                                       placeholder="Password"/>
+                            )}
+                        </Form.Item>
+                        <Form.Item>
+                            <Button
+                                style={{width: "100%"}}
+                                type="primary"
+                                htmlType="submit"
+                                disabled={hasErrors(getFieldsError())}
+                            >
+                                登录
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Modal>
             </div>
         )
     }
