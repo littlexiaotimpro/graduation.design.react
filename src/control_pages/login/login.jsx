@@ -96,7 +96,8 @@ class Login extends Component {
                                 width: 120,
                                 borderRadius: 20,
                             }}
-                                    size={'large'}>文档</Button>
+                                    size={'large'}>
+                                <a href={"/home"}>客户端</a></Button>
                         </div>
                     </Content>
                 </Layout>

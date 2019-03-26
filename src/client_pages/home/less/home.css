@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.card-box .cards {
+  text-align: center;
+  height: 450px;
+  margin-top: 40px;
+  padding: 50px;
+}
+/*# sourceMappingURL=home.css.map */
