@@ -5,6 +5,7 @@ import "./less/tabbar.css";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import Home from "../home/Home";
 import Read from "../read/Read";
+import Watch from "../watch/Watch";
 
 const {Header, Content} = Layout;
 const Search = Input.Search;
@@ -123,7 +124,7 @@ class TabBar extends Component {
                                 <Route path={"/home"} component={Home}/>
                                 <Route path={"/writing"} component={Home}/>
                                 <Route path={"/reading"} component={Read}/>
-                                <Route path={"/watching"} component={Home}/>
+                                <Route path={"/watching"} component={Watch}/>
                                 <Route path={"/listening"} component={Home}/>
                                 <Route path={"/about"} component={Home}/>
                             </div>

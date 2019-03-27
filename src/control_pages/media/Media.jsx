@@ -25,7 +25,7 @@ class Media extends Component {
         this.columns = [{
             title: 'enMedia',
             dataIndex: 'enmedia',
-            width: 100,
+            width: 130,
         }, {
             title: 'enArticle',
             dataIndex: 'enarticle',
@@ -289,7 +289,7 @@ class Media extends Component {
                 bordered
                 dataSource={this.state.medias}
                 columns={this.columns}
-                scroll={{x: 1820, y: 320}}
+                scroll={{x: 1850, y: 320}}
             />
             {this.state.medias.length === 0 ? saveButton : null}
             <Drawer

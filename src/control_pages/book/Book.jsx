@@ -73,7 +73,7 @@ class Book extends Component {
         }, {
             title: 'Author',
             dataIndex: 'author',
-            width: 130,
+            width: 170,
         }, {
             title: 'Summary',
             dataIndex: 'summary',
@@ -294,7 +294,7 @@ class Book extends Component {
                 bordered
                 dataSource={this.state.books}
                 columns={this.columns}
-                scroll={{x: 2100, y: 320}}
+                scroll={{x: 2150, y: 320}}
             />
             {this.state.books.length === 0 ? saveButton : null}
             <Drawer

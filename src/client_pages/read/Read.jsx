@@ -1,6 +1,13 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Checkbox, Col, Row} from "antd";
+import {Avatar, Checkbox, Col, Icon, List, Row} from "antd";
+
+const IconText = ({type, text}) => (
+    <span>
+    <Icon type={type} style={{marginRight: 8}}/>
+        {text}
+  </span>
+);
 
 class Read extends Component {
 
@@ -19,7 +26,7 @@ class Read extends Component {
     }
 
     componentDidMount() {
-        this.getData(null, null);
+        this.getData("books", null);
         this.getCategory();
     }
 
@@ -121,10 +128,35 @@ class Read extends Component {
                         </Row>
                     </Checkbox.Group>
                 )}
-                <div className={"books-box"}>
-                    {this.state.books.map((book) => (
-                        <div key={book.enbook}>{book.caption}</div>
-                    ))}
+                <div className={"books-box"} style={{marginTop: 30, marginBottom: 30}}>
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+                        pagination={{
+                            onChange: (page) => {
+                                console.log(page);
+                            },
+                            pageSize: 3,
+                        }}
+                        dataSource={this.state.books}
+                        renderItem={item => (
+                            <List.Item
+                                key={item.caption}
+                                actions={[<IconText type="star-o" text="156"/>, <IconText type="like-o" text="156"/>,
+                                    <IconText type="message" text="2"/>]}
+                                extra={<img width={200} alt={item.caption}
+                                            src={item.imgbook}/>}
+                            >
+                                <List.Item.Meta
+                                    avatar={<Avatar
+                                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                    title={<a href={item.address}>{item.caption}</a>}
+                                    description={item.author}
+                                />
+                                {item.summary}
+                            </List.Item>
+                        )}
+                    />
                 </div>
             </div>
         )
