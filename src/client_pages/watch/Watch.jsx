@@ -1,13 +1,21 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Checkbox, Col, Row, Steps, Timeline} from "antd";
+import {Button, Checkbox, List, Col, Row, Steps, Timeline, Icon} from "antd";
+import "./less/watch.css";
 
+const IconText = ({type, text, href}) => (
+    <span>
+        <a className={"hover-style"} href={href}><Icon type={type}/>{" " + text}</a>
+    </span>
+);
 
 class Watch extends Component {
     constructor(props) {
         super(props);
         this.state = {
             medias: [],
+            message: [],
+            mediaKey: null,
             tags: [],
             cates: [],
             checkedCate: [],
@@ -125,12 +133,47 @@ class Watch extends Component {
                 <Timeline>
                     {this.state.medias.map((media) => (
                         <Timeline.Item key={media.key}>
-                            <Steps size="small" style={{width: "70%"}} current={0}>
+                            <Steps size="small" style={{width: "80%"}} current={0}>
                                 <Steps.Step title={media.key}/>
                                 {media.value.map((v) => (
-                                    <Steps.Step key={v.enmedia} title={v.caption} description={v.showtime}/>
+                                    <Steps.Step key={v.enmedia} title={(<Button className={"media-focus"} onClick={() => {
+                                        let data = [];
+                                        data.push(v);
+                                        this.setState({
+                                            message: data,
+                                            mediaKey: media.key
+                                        })
+                                    }}>{v.caption}</Button>)}
+                                                description={v.showtime}/>
                                 ))}
                             </Steps>
+                            {this.state.mediaKey === media.key ?
+                                (<div key={this.state.mediaKey}
+                                      className="steps-content">
+                                    {this.state.message.length <= 0 ? null :
+                                        (<List
+                                                itemLayout="vertical"
+                                                size="large"
+                                                dataSource={this.state.message}
+                                                renderItem={item => (
+                                                    <List.Item
+                                                        key={item.enmedia}
+                                                        actions={[<IconText type={"read"} href={item.enarticle}
+                                                                            text={"影评"}/>]}
+                                                        extra={<img width={158} alt={item.caption}
+                                                                    src={item.imgmedia}/>}
+                                                    >
+                                                        <List.Item.Meta
+                                                            title={item.caption}
+                                                            description={"上映时间：" + item.showtime}
+                                                        />
+                                                        {"简介：" + item.summary}
+                                                    </List.Item>
+                                                )}
+                                            />
+                                        )
+                                    }
+                                </div>) : null}
                         </Timeline.Item>
                     ))}
                 </Timeline>

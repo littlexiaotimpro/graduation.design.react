@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.hover-style {
+  color: gray;
+}
+.hover-style:hover {
+  color: black;
+}
+/*# sourceMappingURL=read.css.map */

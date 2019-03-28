@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Avatar, Checkbox, Col, Icon, List, Row} from "antd";
+import {Checkbox, Col, Icon, List, Row} from "antd";
+import "./less/read.css";
 
-const IconText = ({type, text}) => (
+const IconText = ({type, text, href}) => (
     <span>
-    <Icon type={type} style={{marginRight: 8}}/>
-        {text}
-  </span>
+        <a className={"hover-style"} href={href}><Icon type={type}/>{" " + text}</a>
+    </span>
 );
 
 class Read extends Component {
@@ -142,18 +142,16 @@ class Read extends Component {
                         renderItem={item => (
                             <List.Item
                                 key={item.caption}
-                                actions={[<IconText type="star-o" text="156"/>, <IconText type="like-o" text="156"/>,
-                                    <IconText type="message" text="2"/>]}
+                                actions={[<IconText type={"link"} href={item.address} text={"链接地址"}/>,
+                                    <IconText type={"read"} href={item.enarticle} text={"书评"}/>]}
                                 extra={<img width={200} alt={item.caption}
                                             src={item.imgbook}/>}
                             >
                                 <List.Item.Meta
-                                    avatar={<Avatar
-                                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
                                     title={<a href={item.address}>{item.caption}</a>}
-                                    description={item.author}
+                                    description={"作者：" + item.author}
                                 />
-                                {item.summary}
+                                {"简介：" + item.summary}
                             </List.Item>
                         )}
                     />
