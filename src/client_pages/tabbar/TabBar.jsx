@@ -1,14 +1,14 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Layout, Menu, Input, Row, Col, Drawer, Divider,} from 'antd';
+import {Layout, Menu, Input, Row, Col, Drawer, Divider, Icon, AutoComplete,} from 'antd';
 import "./less/tabbar.css";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import Home from "../home/Home";
 import Read from "../read/Read";
 import Watch from "../watch/Watch";
+import Record from "../record/Record";
 
 const {Header, Content} = Layout;
-const Search = Input.Search;
 const pStyle = {
     fontSize: 16,
     color: 'rgba(0,0,0,0.85)',
@@ -45,6 +45,9 @@ class TabBar extends Component {
         this.state = {
             navbars: [],
             visible: false,
+            word: null,
+            searchResults: [],
+            dataSource: [],
         }
     }
 
@@ -78,6 +81,48 @@ class TabBar extends Component {
         });
     };
 
+    searchWord = (e) => {
+        this.setState({
+            word: e.target.value
+        })
+    };
+
+    getDataSaveRecord = () => {
+        const _this = this;
+        axios.all([axios.post("http://localhost:8080/article/record", {
+            keyword: _this.state.word
+        }), axios.post("http://localhost:8080/record/save", {
+            keyword: _this.state.word
+        }), axios.get("http://localhost:8080/record/auto")])
+            .then(axios.spread(function (results, response, datas) {
+                console.log(datas)
+                _this.setState({
+                    searchResults: results.data,
+                    dataSource: datas.data
+                })
+                console.log(response)
+            })).catch(function (error) {
+            console.log(error)
+        })
+    }
+
+    handleSearch = (value) => {
+        const _this = this;
+        axios.get("http://localhost:8080/record/auto")
+            .then(function (response) {
+                let values = [];
+                for (let i = 0; i < response.data.length; i++) {
+                    let showMsg = response.data[i].keyword + "  共使用了" + response.data[i].num + "次";
+                    values.push(showMsg);
+                }
+                _this.setState({
+                    dataSource: !value ? [] : values
+                })
+            }).catch(function (error) {
+            console.log(error)
+        })
+    }
+
     render() {
         return (<Router>
             <div>
@@ -102,12 +147,22 @@ class TabBar extends Component {
                                     </Menu.Item>
                                 ))}
                             </Menu>
-                            <div className="designer">
-                                <Search
-                                    placeholder="输入关键字"
-                                    onSearch={value => console.log(value)}
-                                    style={{width: "25%", lineHeight: '64px', float: "left"}}
+                            <div className="designer" style={{width: "25%", lineHeight: '64px', float: "left"}}>
+                                <AutoComplete
+                                    dataSource={this.state.dataSource}
+                                    style={{width: 200}}
+                                    onSearch={this.handleSearch}
+                                    placeholder="input here"
                                 />
+                                <Input placeholder="输入关键字" onChange={this.searchWord}
+                                       suffix={(<Link to={{
+                                           pathname: "record",
+                                           state: {
+                                               searchKey: this.state.word,
+                                               searchResults: this.state.searchResults
+                                           }
+                                       }} className={"search-color"} onClick={this.getDataSaveRecord}><Icon
+                                           type={"search"}/></Link>)}/>
                             </div>
                             <div onClick={this.showDrawer} style={{
                                 width: 40,
@@ -127,6 +182,7 @@ class TabBar extends Component {
                                 <Route path={"/watching"} component={Watch}/>
                                 <Route path={"/listening"} component={Home}/>
                                 <Route path={"/about"} component={Home}/>
+                                <Route path={"/record"} component={Record}/>
                             </div>
                         </div>
                     </Content>

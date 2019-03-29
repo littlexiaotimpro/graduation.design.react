@@ -55,7 +55,7 @@ class Watch extends Component {
             _this.setState({
                 cates: response.data,
                 checkedCate: v,
-                checkedTag: []
+                checkedTag: [],
             });
             _this.getTags(response.data.length <= 0 ? '' : response.data[0].encategory);
         }).catch(function (error) {
@@ -81,7 +81,8 @@ class Watch extends Component {
         value.push(e.target.value)
         this.setState({
             checkedCate: value,
-            checkedTag: []
+            checkedTag: [],
+            mediaKey: null,
         })
         this.getTags(e.target.value);
         this.getData(e.target.value, null);
@@ -160,7 +161,7 @@ class Watch extends Component {
                                                         key={item.enmedia}
                                                         actions={[<IconText type={"read"} href={item.enarticle}
                                                                             text={"影评"}/>]}
-                                                        extra={<img width={158} alt={item.caption}
+                                                        extra={<img height={240} alt={item.caption}
                                                                     src={item.imgmedia}/>}
                                                     >
                                                         <List.Item.Meta
