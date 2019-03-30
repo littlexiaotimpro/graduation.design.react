@@ -8,6 +8,8 @@ import Tags from "../tags/Tags";
 import Media from "../media/Media";
 import Book from "../book/Book";
 import Music from "../music/Music";
+import Article from "../article/Article";
+import Record from "../record/Record";
 
 const {
     Header, Content, Footer, Sider,
@@ -120,8 +122,8 @@ class Siderbar extends Component {
                                 <Route path={"/control/book"} component={Book}/>
                                 <Route path={"/control/media"} component={Media}/>
                                 <Route path={"/control/music"} component={Music}/>
-                                <Route path={"/control/article"} component={Navbar}/>
-                                <Route path={"/control/record"} component={Navbar}/>
+                                <Route path={"/control/article"} component={Article}/>
+                                <Route path={"/control/record"} component={Record}/>
                             </div>
                         </Content>
                         <Footer style={{textAlign: 'center'}}>
