@@ -9,6 +9,8 @@ import Watch from "../watch/Watch";
 import Record from "../record/Record";
 
 const {Header, Content} = Layout;
+const Option = AutoComplete.Option;
+const OptGroup = AutoComplete.OptGroup;
 const pStyle = {
     fontSize: 16,
     color: 'rgba(0,0,0,0.85)',
@@ -81,24 +83,16 @@ class TabBar extends Component {
         });
     };
 
-    searchWord = (e) => {
-        this.setState({
-            word: e.target.value
-        })
-    };
-
     getDataSaveRecord = () => {
         const _this = this;
         axios.all([axios.post("http://localhost:8080/article/record", {
             keyword: _this.state.word
         }), axios.post("http://localhost:8080/record/save", {
             keyword: _this.state.word
-        }), axios.get("http://localhost:8080/record/auto")])
-            .then(axios.spread(function (results, response, datas) {
-                console.log(datas)
+        })])
+            .then(axios.spread(function (results, response) {
                 _this.setState({
                     searchResults: results.data,
-                    dataSource: datas.data
                 })
                 console.log(response)
             })).catch(function (error) {
@@ -106,21 +100,32 @@ class TabBar extends Component {
         })
     }
 
+    handleSearchWord = (value) => {
+        this.setState({
+            word: value
+        })
+    }
+
     handleSearch = (value) => {
         const _this = this;
-        axios.get("http://localhost:8080/record/auto")
-            .then(function (response) {
-                let values = [];
-                for (let i = 0; i < response.data.length; i++) {
-                    let showMsg = response.data[i].keyword + "  共使用了" + response.data[i].num + "次";
-                    values.push(showMsg);
-                }
-                _this.setState({
-                    dataSource: !value ? [] : values
-                })
-            }).catch(function (error) {
+        axios.post("http://localhost:8080/record/auto", {
+            keyword: value
+        }).then(function (response) {
+            _this.setState({
+                dataSource: value ? response.data : [],
+            })
+        }).catch(function (error) {
             console.log(error)
         })
+    }
+
+    renderOption(item) {
+        return (
+            <Option key={item.keyword} text={item.keyword}>
+                {item.keyword}
+                <span className="global-search-item-count">约{item.count}个结果</span>
+            </Option>
+        );
     }
 
     render() {
@@ -149,20 +154,21 @@ class TabBar extends Component {
                             </Menu>
                             <div className="designer" style={{width: "25%", lineHeight: '64px', float: "left"}}>
                                 <AutoComplete
-                                    dataSource={this.state.dataSource}
-                                    style={{width: 200}}
+                                    style={{width: "100%"}}
+                                    dataSource={this.state.dataSource.map(this.renderOption)}
                                     onSearch={this.handleSearch}
-                                    placeholder="input here"
-                                />
-                                <Input placeholder="输入关键字" onChange={this.searchWord}
-                                       suffix={(<Link to={{
-                                           pathname: "record",
-                                           state: {
-                                               searchKey: this.state.word,
-                                               searchResults: this.state.searchResults
-                                           }
-                                       }} className={"search-color"} onClick={this.getDataSaveRecord}><Icon
-                                           type={"search"}/></Link>)}/>
+                                    placeholder="输入关键字"
+                                    optionLabelProp="text"
+                                    onChange={this.handleSearchWord}
+                                ><Input
+                                    suffix={(<Link to={{
+                                        pathname: "record",
+                                        state: {
+                                            searchKey: this.state.word,
+                                            searchResults: this.state.searchResults
+                                        }
+                                    }} className={"search-color"} onClick={this.getDataSaveRecord}><Icon
+                                        type={"search"}/></Link>)}/></AutoComplete>
                             </div>
                             <div onClick={this.showDrawer} style={{
                                 width: 40,

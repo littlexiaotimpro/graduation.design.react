@@ -9,4 +9,8 @@
 .search-color:focus {
   color: gray;
 }
+.global-search-item-count {
+  position: absolute;
+  right: 16px;
+}
 /*# sourceMappingURL=tabbar.css.map */
