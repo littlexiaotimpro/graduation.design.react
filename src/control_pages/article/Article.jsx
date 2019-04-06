@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import moment from "moment";
 import axios from "axios";
-import {Button, Table, Select, Drawer, Form, Col, Row, Input, Upload, Modal, Icon} from 'antd';
+import {Button, Table, Select, Drawer, Form, Col, Row, Input, Upload, Icon} from 'antd';
 
 const Option = Select.Option;
 
@@ -9,7 +9,7 @@ class Article extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            medias: [],
+            articles: [],
             categories: [],
             chooseCate: "",
             navbars: [],
@@ -17,8 +17,6 @@ class Article extends Component {
             tags: [],
             record: [],
             visible: false,
-            previewVisible: false,
-            previewImage: '',
             fileList: []
         };
         this.columns = [{
@@ -143,7 +141,7 @@ class Article extends Component {
         });
     };
 
-    saveMedia = () => {
+    saveArticle = () => {
         this.setState({
             visible: true,
         });
@@ -160,12 +158,12 @@ class Article extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                _this.state.fileList.map((img) => {
-                    values.imgmedia = img.response;
+                _this.state.fileList.map((file) => {
+                    values.fileurl = file.response;
                     return null;
                 })
-                const newData = [...this.state.medias];
-                let key = values.enmedia;
+                const newData = [...this.state.articles];
+                let key = values.enarticle;
                 const index = newData.findIndex(item => key === item.key);
                 if (index > -1) {
                     // update
@@ -200,19 +198,6 @@ class Article extends Component {
         });
     };
 
-    handleChange = (e) => {
-        e.preventDefault();
-    }
-
-    handleCancel = () => this.setState({previewVisible: false})
-
-    handlePreview = (file) => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
-    }
-
     handleChange = (file) => {
         this.setState({
             fileList: file.fileList
@@ -226,15 +211,15 @@ class Article extends Component {
             axios.get("http://localhost:8080/category/caption"),
             axios.get("http://localhost:8080/navbar/caption"),
             axios.get("http://localhost:8080/tags/caption")])
-            .then(axios.spread(function (medias, cate, nav, tag) {
-                // console.log(medias);
+            .then(axios.spread(function (articles, cate, nav, tag) {
+                // console.log(articles);
                 // console.log(cate);
                 // console.log(tag);
                 // console.log(nav);
                 let values = [];
-                for (let i = 0; i < medias.data.length; i++) {
-                    medias.data[i].key = medias.data[i].enmedia;
-                    values.push(medias.data[i]);
+                for (let i = 0; i < articles.data.length; i++) {
+                    articles.data[i].key = articles.data[i].enarticle;
+                    values.push(articles.data[i]);
                 }
                 let cates = [];
                 for (let i = 0; i < cate.data.length; i++) {
@@ -252,7 +237,7 @@ class Article extends Component {
                     navs.push(nav.data[i]);
                 }
                 _this.setState({
-                    medias: values,
+                    articles: values,
                     categories: cates,
                     navbars: navs,
                     tags: tagss,
@@ -271,26 +256,25 @@ class Article extends Component {
 
     render() {
         const {getFieldDecorator} = this.props.form;
-        const {previewVisible, previewImage, fileList} = this.state;
+        const {fileList} = this.state;
         const uploadButton = (
-            <div>
-                <Icon type="plus"/>
-                <div className="ant-upload-text">Upload</div>
-            </div>
+            <Button>
+                <Icon type="upload"/> 点击上传
+            </Button>
         );
         const saveButton = (
-            <Button type="primary" onClick={this.saveMedia}>
+            <Button type="primary" onClick={this.saveArticle}>
                 <Icon type={"plus"}/>新增
             </Button>
         );
         return (<div>
             <Table
                 bordered
-                dataSource={this.state.medias}
+                dataSource={this.state.articles}
                 columns={this.columns}
                 scroll={{x: 1950, y: 320}}
             />
-            {this.state.medias.length === 0 ? saveButton : null}
+            {this.state.articles.length === 0 ? saveButton : null}
             <Drawer
                 title="Create or Update"
                 width={420}
@@ -381,29 +365,24 @@ class Article extends Component {
                             {/*<div className="picture-style">*/}
                             {/*<FileInput data={this.state.record}/>*/}
                             {/*</div>*/}
-                            <div className="clearfix">
+                            <div className="clearfix" style={{marginBottom: 30}}>
                                 <Upload
-                                    action="http://localhost:8080/media/img"
-                                    listType="picture-card"
+                                    action="http://localhost:8080/article/file"
                                     data={{
                                         category: this.state.record.encategory,
-                                        imgmedia: this.file
+                                        articleUrl: this.file
                                     }}
                                     fileList={fileList}
-                                    onPreview={this.handlePreview}
                                     onChange={this.handleChange}
                                 >
                                     {fileList.length >= 1 ? null : uploadButton}
                                 </Upload>
-                                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                                    <img alt="example" style={{width: '100%'}} src={previewImage}/>
-                                </Modal>
                             </div>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col span={24}>
-                            <Form.Item label="title">
+                            <Form.Item label="Title">
                                 {getFieldDecorator('title', {
                                     rules: [{required: true, message: '输入名称'}],
                                     initialValue: this.state.record.title,

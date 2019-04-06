@@ -201,10 +201,6 @@ class Media extends Component {
         });
     };
 
-    handleChange = (e) => {
-        e.preventDefault();
-    }
-
     handleCancel = () => this.setState({previewVisible: false})
 
     handlePreview = (file) => {

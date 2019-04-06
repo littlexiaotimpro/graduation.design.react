@@ -7,6 +7,7 @@ class Home extends Component {
         return (
             <div>
                 <div className={"card-box"}>
+                    {/*你的人生，除了诗与远方，还有bug*/}
                     <Row gutter={16}>
                         <Col span={6}>
                             <div className={"cards"}>
