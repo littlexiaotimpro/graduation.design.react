@@ -49,7 +49,7 @@ class Record extends Component {
     render() {
         return (<div>
             <Table columns={this.columns} dataSource={this.state.records} pagination={{pageSize: 10}}
-                   scroll={{y: 300}}/>
+                   scroll={{y: 290}}/>
         </div>)
     }
 }

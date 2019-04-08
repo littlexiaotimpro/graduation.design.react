@@ -272,7 +272,7 @@ class Article extends Component {
                 bordered
                 dataSource={this.state.articles}
                 columns={this.columns}
-                scroll={{x: 1950, y: 320}}
+                scroll={{x: 1950, y: 290}}
             />
             {this.state.articles.length === 0 ? saveButton : null}
             <Drawer

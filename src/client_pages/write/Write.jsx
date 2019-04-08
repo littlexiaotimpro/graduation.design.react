@@ -1,20 +1,13 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Checkbox, Col, Icon, List, Row} from "antd";
-import "./less/read.css";
+import {Checkbox, Col, List, Icon, Row} from "antd";
 
-const IconText = ({type, text, href}) => (
-    <span>
-        <a className={"hover-style"} href={href}><Icon type={type}/>{" " + text}</a>
-    </span>
-);
-
-class Read extends Component {
+class Write extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            books: [],
+            articles: [],
             tags: [],
             cates: [],
             checkedCate: [],
@@ -26,18 +19,18 @@ class Read extends Component {
     }
 
     componentDidMount() {
-        this.getData("books", null);
+        this.getData("recommend", null);
         this.getCategory();
     }
 
     getData(cate, tag) {
         const _this = this;
-        axios.post("http://localhost:8080/book/client", {
+        axios.post("http://localhost:8080/article/cate_tag", {
             encategory: cate,
             entag: tag,
         }).then(function (response) {
             _this.setState({
-                books: response.data
+                articles: response.data
             })
         }).catch(function (error) {
             console.log(error);
@@ -136,15 +129,14 @@ class Read extends Component {
                             onChange: (page) => {
                                 console.log(page);
                             },
-                            pageSize: 3,
+                            pageSize: 8,
                         }}
-                        dataSource={this.state.books}
+                        dataSource={this.state.articles}
                         renderItem={item => (
                             <List.Item
-                                key={item.caption}
-                                actions={[<IconText type={"link"} href={item.address} text={"链接地址"}/>,
-                                    item.enarticle === null ?
-                                        <IconText type={"read"} href={item.enarticle} text={"暂无书评"}/> : <span>
+                                key={item.enarticle}
+                                actions={[
+                                    <span>
                                         <a className={"hover-style"} onClick={() => {
                                             const _this = this;
                                             axios.post("http://localhost:8080/article/primary", {
@@ -160,13 +152,11 @@ class Read extends Component {
                                                 console.log(error)
                                             })
                                         }
-                                        }><Icon type={"read"}/>{" " + "书评"}</a>
+                                        }><Icon type={"read"}/>{"  阅读全文"}</a>
                                     </span>]}
-                                extra={<img width={200} alt={item.caption}
-                                            src={item.imgbook}/>}
                             >
                                 <List.Item.Meta
-                                    title={<a href={item.address}>{item.caption}</a>}
+                                    title={item.title}
                                     description={"作者：" + item.author}
                                 />
                                 {"简介：" + item.summary}
@@ -177,6 +167,7 @@ class Read extends Component {
             </div>
         )
     }
+
 }
 
-export default Read;
+export default Write;

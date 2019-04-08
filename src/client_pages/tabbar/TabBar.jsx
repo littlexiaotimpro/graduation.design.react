@@ -4,9 +4,11 @@ import {Layout, Menu, Input, Row, Col, Drawer, Divider, Icon, AutoComplete,} fro
 import "./less/tabbar.css";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import Home from "../home/Home";
+import Write from "../write/Write";
 import Read from "../read/Read";
 import Watch from "../watch/Watch";
 import Record from "../record/Record";
+import ArticleHtml from "../article/ArticleHtml";
 
 const {Header, Content} = Layout;
 const Option = AutoComplete.Option;
@@ -183,12 +185,13 @@ class TabBar extends Component {
                         <div style={{width: "85%", margin: "0 auto"}}>
                             <div style={{background: '#fff', marginTop: 30, minHeight: 450}}>
                                 <Route path={"/home"} component={Home}/>
-                                <Route path={"/writing"} component={Home}/>
+                                <Route path={"/writing"} component={Write}/>
                                 <Route path={"/reading"} component={Read}/>
                                 <Route path={"/watching"} component={Watch}/>
                                 <Route path={"/listening"} component={Home}/>
                                 <Route path={"/about"} component={Home}/>
                                 <Route path={"/record"} component={Record}/>
+                                <Route path={"/readArticle"} component={ArticleHtml}/>
                             </div>
                         </div>
                     </Content>

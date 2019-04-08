@@ -88,7 +88,7 @@ class Login extends Component {
                     <Content style={{marginTop: 80, background: "#fff"}}>
                         <div className={"box-content"}>
                             <p style={{fontSize: "3.2em"}}>React + Ant Design</p>
-                            <p style={{marginTop: -25, fontSize: "1.3em"}}> Graduation Design 管理端</p>
+                            <p style={{fontSize: "1.3em"}}> Graduation Design 管理端</p>
                             <Button style={{
                                 marginTop: 15,
                                 background: "black",

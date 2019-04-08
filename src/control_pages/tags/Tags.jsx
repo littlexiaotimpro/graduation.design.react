@@ -262,7 +262,7 @@ class Tags extends Component {
                     pageSize: 10,
                     onChange: this.cancel,
                 }}
-                scroll={{y: 300}}
+                scroll={{y: 290}}
             />
         );
     }

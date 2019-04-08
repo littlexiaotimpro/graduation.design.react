@@ -2,10 +2,9 @@
   margin: 0;
   padding: 0;
 }
-.card-box .cards {
+.card-box p {
   text-align: center;
-  height: 450px;
-  margin-top: 40px;
-  padding: 50px;
+  font-size: 1.3em;
+  margin-top: 20px;
 }
 /*# sourceMappingURL=home.css.map */

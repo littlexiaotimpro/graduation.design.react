@@ -15,12 +15,12 @@
   display: inline-block;
   width: 100%;
 }
-a {
+a.tab-style {
   color: darkgray;
 }
-a:hover,
-a:focus,
-a:active {
+a.tab-style:hover,
+a.tab-style:focus,
+a.tab-style:active {
   color: white;
   text-decoration: none;
 }
