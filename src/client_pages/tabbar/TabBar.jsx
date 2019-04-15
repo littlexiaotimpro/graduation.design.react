@@ -7,6 +7,8 @@ import Home from "../home/Home";
 import Write from "../write/Write";
 import Read from "../read/Read";
 import Watch from "../watch/Watch";
+import Listen from "../listen/Listen";
+import About from "../home/About";
 import Record from "../record/Record";
 import ArticleHtml from "../article/ArticleHtml";
 
@@ -188,8 +190,8 @@ class TabBar extends Component {
                                 <Route path={"/writing"} component={Write}/>
                                 <Route path={"/reading"} component={Read}/>
                                 <Route path={"/watching"} component={Watch}/>
-                                <Route path={"/listening"} component={Home}/>
-                                <Route path={"/about"} component={Home}/>
+                                <Route path={"/listening"} component={Listen}/>
+                                <Route path={"/about"} component={About}/>
                                 <Route path={"/record"} component={Record}/>
                                 <Route path={"/readArticle"} component={ArticleHtml}/>
                             </div>
