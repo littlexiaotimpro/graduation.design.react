@@ -152,7 +152,7 @@ class Write extends Component {
                                                 console.log(error)
                                             })
                                         }
-                                        }><Icon type={"read"}/>{"  阅读全文"}</a>
+                                        }><Icon type={"read"}/>&nbsp;&nbsp;{"  阅读全文"}</a>
                                     </span>]}
                             >
                                 <List.Item.Meta

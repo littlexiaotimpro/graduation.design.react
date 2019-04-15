@@ -5,7 +5,7 @@ import "./less/read.css";
 
 const IconText = ({type, text, href}) => (
     <span>
-        <a className={"hover-style"} href={href}><Icon type={type}/>{" " + text}</a>
+        <a className={"hover-style"} href={href}><Icon type={type}/>&nbsp;&nbsp;{" " + text}</a>
     </span>
 );
 
@@ -160,7 +160,7 @@ class Read extends Component {
                                                 console.log(error)
                                             })
                                         }
-                                        }><Icon type={"read"}/>{" " + "书评"}</a>
+                                        }><Icon type={"read"}/>&nbsp;&nbsp;{" " + "书评"}</a>
                                     </span>]}
                                 extra={<img width={200} alt={item.caption}
                                             src={item.imgbook}/>}

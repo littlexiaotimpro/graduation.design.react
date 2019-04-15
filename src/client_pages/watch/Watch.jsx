@@ -5,7 +5,7 @@ import "./less/watch.css";
 
 const IconText = ({type, text, href}) => (
     <span>
-        <a className={"hover-style"} href={href}><Icon type={type}/>{" " + text}</a>
+        <a className={"hover-style"} href={href}><Icon type={type}/>&nbsp;&nbsp;{" " + text}</a>
     </span>
 );
 
@@ -137,14 +137,15 @@ class Watch extends Component {
                             <Steps size="small" style={{width: "80%"}} current={0}>
                                 <Steps.Step title={media.key}/>
                                 {media.value.map((v) => (
-                                    <Steps.Step key={v.enmedia} title={(<Button className={"media-focus"} onClick={() => {
-                                        let data = [];
-                                        data.push(v);
-                                        this.setState({
-                                            message: data,
-                                            mediaKey: media.key
-                                        })
-                                    }}>{v.caption}</Button>)}
+                                    <Steps.Step key={v.enmedia}
+                                                title={(<Button className={"media-focus"} onClick={() => {
+                                                    let data = [];
+                                                    data.push(v);
+                                                    this.setState({
+                                                        message: data,
+                                                        mediaKey: media.key
+                                                    })
+                                                }}>{v.caption}</Button>)}
                                                 description={v.showtime}/>
                                 ))}
                             </Steps>
@@ -159,8 +160,26 @@ class Watch extends Component {
                                                 renderItem={item => (
                                                     <List.Item
                                                         key={item.enmedia}
-                                                        actions={[<IconText type={"read"} href={item.enarticle}
-                                                                            text={"影评"}/>]}
+                                                        actions={[item.enarticle === null ?
+                                                            <IconText type={"read"} href={item.enarticle}
+                                                                      text={"暂无影评"}/> : <span>
+                                                                    <a className={"hover-style"} onClick={() => {
+                                                                        const _this = this;
+                                                                        axios.post("http://localhost:8080/article/primary", {
+                                                                            enarticle: item.enarticle
+                                                                        }).then(function (response) {
+                                                                            _this.props.history.push({
+                                                                                pathname: "readArticle",
+                                                                                state: {
+                                                                                    htmlData: response.data,
+                                                                                }
+                                                                            })
+                                                                        }).catch(function (error) {
+                                                                            console.log(error)
+                                                                        })
+                                                                    }
+                                                                    }><Icon type={"read"}/>&nbsp;&nbsp;{" " + "影评"}</a>
+                                                                </span>]}
                                                         extra={<img height={240} alt={item.caption}
                                                                     src={item.imgmedia}/>}
                                                     >

@@ -4,6 +4,7 @@
 }
 .hover-style {
   color: gray;
+  font-size: 0.9em;
 }
 .hover-style:hover {
   color: black;

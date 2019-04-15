@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Layout, Menu, Input, Row, Col, Drawer, Divider, Icon, AutoComplete,} from 'antd';
+import {Layout, Menu, Input, Row, Col, Drawer, Divider, Icon, AutoComplete, Avatar,} from 'antd';
 import "./less/tabbar.css";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import Home from "../home/Home";
@@ -179,8 +179,9 @@ class TabBar extends Component {
                                 height: 40,
                                 marginTop: 12,
                                 float: "right",
-                                background: "black"
-                            }}></div>
+                            }}>
+                                <Avatar style={{marginTop: -24, backgroundColor: '#7265e6'}}>斯</Avatar>
+                            </div>
                         </div>
                     </Header>
                     <Content style={{padding: '0 50px', background: '#fff',}}>
