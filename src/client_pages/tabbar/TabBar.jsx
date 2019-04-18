@@ -95,10 +95,10 @@ class TabBar extends Component {
             keyword: _this.state.word
         })])
             .then(axios.spread(function (results, response) {
+                console.log(response)
                 _this.setState({
                     searchResults: results.data,
                 })
-                console.log(response)
             })).catch(function (error) {
             console.log(error)
         })
@@ -165,7 +165,8 @@ class TabBar extends Component {
                                     optionLabelProp="text"
                                     onChange={this.handleSearchWord}
                                 ><Input
-                                    suffix={(<Link to={{
+                                    suffix={this.state.word === "" || this.state.word === null ? <Icon
+                                        type={"search"}/> : (<Link to={{
                                         pathname: "record",
                                         state: {
                                             searchKey: this.state.word,
@@ -241,7 +242,7 @@ class TabBar extends Component {
                     <p style={pStyle}>联系</p>
                     <Row>
                         <Col span={24}>
-                            <DescriptionItem title="Email" content="example@gmail.com"/>
+                            <DescriptionItem title="Email" content="littlexiaosi@gmail.com"/>
                         </Col>
                     </Row>
                     <Row>
@@ -249,8 +250,8 @@ class TabBar extends Component {
                             <DescriptionItem
                                 title="Github"
                                 content={(
-                                    <a href="http://github.com/ant-design/ant-design/">
-                                        github.com/ant-design/ant-design/
+                                    <a href="https://github.com/littlexiaotimpro">
+                                        https://github.com/littlexiaotimpro
                                     </a>
                                 )}
                             />
