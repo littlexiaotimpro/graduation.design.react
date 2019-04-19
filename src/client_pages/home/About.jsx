@@ -5,15 +5,15 @@ class About extends Component {
     render() {
         return (
             <div style={{width: "100%", marginTop: 100}}>
-                <p style={{textAlign: "center", fontSize: "4em", color: "#000", width: "100%"}}>
+                <p style={{textAlign: "center", fontSize: "3.7em", color: "#000", width: "100%"}}>
                     <strong>即我（I Am） </strong>
                     <small style={{fontSize: "0.8em"}}> 人本无一，我即是我</small>
                 </p>
-                <p style={{textAlign: "center", fontSize: "1.4em", width: "43%", margin: "0 auto", marginTop: 80}}>
+                <p style={{textAlign: "center", fontSize: "1.4em", width: "53%", margin: "0 auto", marginTop: 80}}>
                     开发一个能够给予使用者学习知识，掌握技能的平台，在未来将由用户自主进行分享和共同构建软件的社区
                 </p>
 
-                <Row style={{width: "70%", textAlign: "center", fontSize: "1.3em", margin: "0 auto", marginTop: 100}}>
+                <Row style={{width: "75%", textAlign: "center", fontSize: "1.3em", margin: "0 auto", marginTop: 100}}>
                     <Col span={8}>
                         <Card bordered={true} style={{height: 150}}>
                             <p><span style={{fontSize: "2em",}}><strong>2015年10月</strong></span> &nbsp;&nbsp;入坑</p>
@@ -40,7 +40,7 @@ class About extends Component {
                     正在努力为用户建立一个真实的 <strong>Hello World</strong>
                 </p>
 
-                <Row gutter={48} style={{width: "70%", fontSize: "1.3em", margin: "0 auto", marginTop: 10}}>
+                <Row gutter={48} style={{width: "75%", fontSize: "1.3em", margin: "0 auto", marginTop: 10}}>
                     <Divider/>
                     <Col className="gutter-row" span={12}>
                         <div className="gutter-box">
@@ -56,7 +56,7 @@ class About extends Component {
                         </div>
                     </Col>
                 </Row>
-                <Row gutter={48} style={{width: "70%", fontSize: "1.3em", margin: "0 auto", marginTop: 20}}>
+                <Row gutter={48} style={{width: "75%", fontSize: "1.3em", margin: "0 auto", marginTop: 20}}>
                     <Col className="gutter-row" span={12}>
                         <div className="gutter-box">
                             <p><strong><a href={"#"} style={{color: "#408DD2"}}>事实</a></strong></p>
@@ -71,7 +71,7 @@ class About extends Component {
                     </Col>
                 </Row>
 
-                <Row gutter={48} style={{width: "70%", fontSize: "1.3em", margin: "0 auto", marginTop: 20}}>
+                <Row gutter={48} style={{width: "75%", fontSize: "1.3em", margin: "0 auto", marginTop: 20}}>
                     <Col className="gutter-row" span={12}>
                         <div className="gutter-box">
                             <p><strong><a href={"#"} style={{color: "#408DD2"}}>关于本站</a></strong></p>
@@ -80,10 +80,10 @@ class About extends Component {
                     </Col>
                 </Row>
 
-                <div style={{width: "70%", margin: "0 auto", marginTop: 30}}>
+                <div style={{width: "75%", margin: "0 auto", marginTop: 30}}>
                     <Divider/>
                 </div>
-                <div style={{width: "70%", margin: "0 auto", marginTop: 80, height: 200,}}>
+                <div style={{width: "75%", margin: "0 auto", marginTop: 80, height: 200,}}>
                     <Row gutter={48}>
                         <Col className="gutter-row" span={8}>
                             <div className="gutter-box">

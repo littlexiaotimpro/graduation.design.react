@@ -10,6 +10,7 @@ import Book from "../book/Book";
 import Music from "../music/Music";
 import Article from "../article/Article";
 import Record from "../record/Record";
+import Log from "../logs/Log";
 
 const {
     Header, Content, Footer, Sider,
@@ -104,11 +105,17 @@ class Siderbar extends Component {
                                     <Link className="tab-style" to={"/control/record"}>Record</Link>
                                 </span>
                             </Menu.Item>
+                            <Menu.Item key="9">
+                                <Icon type="link"/>
+                                <span onClick={this.getEntity.bind(this, "log")} className="nav-text">
+                                    <Link className="tab-style" to={"/control/log"}>日志管理</Link>
+                                </span>
+                            </Menu.Item>
                         </Menu>
                     </Sider>
                     <Layout>
                         <Header style={{background: '#fff', padding: 0, textAlign: 'center'}}>
-                            <h3>{this.state.entity}实体的数据管理</h3>
+                            <h3>{this.state.entity === "log" ? "日志管理" : this.state.entity + "实体的数据管理"}</h3>
                         </Header>
                         <Content style={{margin: '18px 16px 0', overflow: 'initial'}}>
                             <div style={{
@@ -124,11 +131,9 @@ class Siderbar extends Component {
                                 <Route path={"/control/music"} component={Music}/>
                                 <Route path={"/control/article"} component={Article}/>
                                 <Route path={"/control/record"} component={Record}/>
+                                <Route path={"/control/log"} component={Log}/>
                             </div>
                         </Content>
-                        <Footer style={{textAlign: 'center'}}>
-                            Copyright ©2019 Hosted by Ant Design and React Create by HC
-                        </Footer>
                     </Layout>
                 </Layout>
             </div>
