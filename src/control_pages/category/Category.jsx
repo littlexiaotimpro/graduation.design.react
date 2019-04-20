@@ -96,6 +96,9 @@ class Category extends Component {
                 axios.post("http://localhost:8080/category/delete", {
                     encategory: key.encategory,
                     status: key.status === 1 ? 0 : 1
+                }, {
+                    // 单独配置
+                    withCredentials: true
                 }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
@@ -173,7 +176,10 @@ class Category extends Component {
             // 判断通过key值查询行序号，如果不存在，在执行添加操作，否则执行更新操作
             if (index > -1) {
                 // update
-                axios.post("http://localhost:8080/category/update", row).then(function (response) {
+                axios.post("http://localhost:8080/category/update", row, {
+                    // 单独配置
+                    withCredentials: true
+                }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
                         _this.getData();
@@ -183,7 +189,10 @@ class Category extends Component {
                 });
             } else {
                 // save
-                axios.post("http://localhost:8080/category/save", row).then(function (response) {
+                axios.post("http://localhost:8080/category/save", row, {
+                    // 单独配置
+                    withCredentials: true
+                }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
                         _this.getData();
