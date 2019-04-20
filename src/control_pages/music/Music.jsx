@@ -293,7 +293,7 @@ class Music extends Component {
                 //     pageSize: 10,
                 //     onChange: this.cancel,
                 // }}
-                scroll={{x: 1900, y: 290}}
+                scroll={{x: 1900}}
             />
             {this.state.musics.length === 0 ? saveButton : null}
             <Drawer

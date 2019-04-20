@@ -285,7 +285,7 @@ class Media extends Component {
                 bordered
                 dataSource={this.state.medias}
                 columns={this.columns}
-                scroll={{x: 1850, y: 290}}
+                scroll={{x: 1850}}
             />
             {this.state.medias.length === 0 ? saveButton : null}
             <Drawer

@@ -49,6 +49,9 @@ class Login extends Component {
                 axios.post("http://localhost:8080/admin/login", {
                     account: values.account,
                     password: values.password
+                }, {
+                    // 单独配置
+                    withCredentials: true
                 }).then(function (response) {
                     console.log(response);
                     _this.setState({

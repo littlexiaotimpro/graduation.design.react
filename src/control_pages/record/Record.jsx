@@ -38,8 +38,13 @@ class Record extends Component {
     getData() {
         const _this = this;
         axios.get("http://localhost:8080/record/control").then(function (response) {
+            let values = [];
+            for (let i = 0; i < response.data.length; i++) {
+                response.data[i].key = response.data[i].id;
+                values.push(response.data[i]);
+            }
             _this.setState({
-                records: response.data
+                records: values
             })
         }).catch(function (error) {
             console.log(error)
@@ -48,8 +53,7 @@ class Record extends Component {
 
     render() {
         return (<div>
-            <Table columns={this.columns} dataSource={this.state.records} pagination={{pageSize: 10}}
-                   scroll={{y: 290}}/>
+            <Table columns={this.columns} dataSource={this.state.records} pagination={{pageSize: 10}}/>
         </div>)
     }
 }

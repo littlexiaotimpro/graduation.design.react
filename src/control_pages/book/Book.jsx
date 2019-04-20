@@ -294,7 +294,7 @@ class Book extends Component {
                 bordered
                 dataSource={this.state.books}
                 columns={this.columns}
-                scroll={{x: 2150, y: 290}}
+                scroll={{x: 2150}}
             />
             {this.state.books.length === 0 ? saveButton : null}
             <Drawer

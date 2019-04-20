@@ -91,6 +91,9 @@ class Navbar extends Component {
                 axios.post("http://localhost:8080/navbar/delete", {
                     ennav: key.ennav,
                     status: key.status === 1 ? 0 : 1
+                }, {
+                    // 单独配置
+                    withCredentials: true
                 }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
@@ -186,7 +189,10 @@ class Navbar extends Component {
                 // });
                 // console.log(newData[index]);
                 // update
-                axios.post("http://localhost:8080/navbar/update", row).then(function (response) {
+                axios.post("http://localhost:8080/navbar/update", row, {
+                    // 单独配置
+                    withCredentials: true
+                }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
                         _this.getData();
@@ -196,7 +202,10 @@ class Navbar extends Component {
                 });
             } else {
                 // save
-                axios.post("http://localhost:8080/navbar/save", row).then(function (response) {
+                axios.post("http://localhost:8080/navbar/save", row, {
+                    // 单独配置
+                    withCredentials: true
+                }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
                         _this.getData();
@@ -276,7 +285,6 @@ class Navbar extends Component {
                     pageSize: 10,
                     onChange: this.cancel,
                 }}
-                scroll={{y: 290}}
             />
         );
     }

@@ -48,6 +48,8 @@ class Siderbar extends Component {
                 <Layout>
                     <Sider style={{
                         minHeight: '100vh',
+                        position: 'fixed',
+                        left: 0,
                     }}
                            collapsible
                            collapsed={this.state.collapsed}
@@ -113,7 +115,7 @@ class Siderbar extends Component {
                             </Menu.Item>
                         </Menu>
                     </Sider>
-                    <Layout>
+                    <Layout style={{marginLeft: 200}}>
                         <Header style={{background: '#fff', padding: 0, textAlign: 'center'}}>
                             <h3>{this.state.entity === "log" ? "日志管理" : this.state.entity + "实体的数据管理"}</h3>
                         </Header>
