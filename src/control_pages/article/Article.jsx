@@ -381,6 +381,7 @@ class Article extends Component {
                                         category: this.state.record.encategory,
                                         articleUrl: this.file
                                     }}
+                                    withCredentials={true}
                                     fileList={fileList}
                                     onChange={this.handleChange}
                                 >

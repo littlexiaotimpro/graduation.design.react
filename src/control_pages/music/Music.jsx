@@ -403,6 +403,7 @@ class Music extends Component {
                                         category: this.state.record.encategory,
                                         imgmusic: this.file
                                     }}
+                                    withCredentials={true}
                                     fileList={fileList}
                                     onPreview={this.handlePreview}
                                     onChange={this.handleChange}

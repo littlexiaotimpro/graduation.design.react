@@ -395,6 +395,7 @@ class Media extends Component {
                                         category: this.state.record.encategory,
                                         imgmedia: this.file
                                     }}
+                                    withCredentials={true}
                                     fileList={fileList}
                                     onPreview={this.handlePreview}
                                     onChange={this.handleChange}

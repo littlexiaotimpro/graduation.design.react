@@ -404,6 +404,7 @@ class Book extends Component {
                                         category: this.state.record.encategory,
                                         imgbook: this.file
                                     }}
+                                    withCredentials={true}
                                     fileList={fileList}
                                     onPreview={this.handlePreview}
                                     onChange={this.handleChange}
