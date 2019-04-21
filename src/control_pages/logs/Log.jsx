@@ -3,7 +3,7 @@ import moment from "moment";
 import axios from "axios";
 import {Table} from "antd";
 
-class Record extends Component {
+class Log extends Component {
 
     constructor(props) {
         super(props);
@@ -62,4 +62,4 @@ class Record extends Component {
     }
 }
 
-export default Record;
+export default Log;
