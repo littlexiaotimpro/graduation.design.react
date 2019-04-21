@@ -87,6 +87,9 @@ class Media extends Component {
                 axios.post("http://localhost:8080/media/delete", {
                     enmedia: key.enmedia,
                     status: key.status === 1 ? 0 : 1
+                }, {
+                    // 单独配置
+                    withCredentials: true
                 }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
@@ -170,7 +173,10 @@ class Media extends Component {
                 const index = newData.findIndex(item => key === item.key);
                 if (index > -1) {
                     // update
-                    axios.post("http://localhost:8080/media/update", values)
+                    axios.post("http://localhost:8080/media/update", values, {
+                        // 单独配置
+                        withCredentials: true
+                    })
                         .then(function (response) {
                             _this.setState({
                                 visible: false,
@@ -184,7 +190,10 @@ class Media extends Component {
                     })
                 } else {
                     // save
-                    axios.post("http://localhost:8080/media/save", values)
+                    axios.post("http://localhost:8080/media/save", values, {
+                        // 单独配置
+                        withCredentials: true
+                    })
                         .then(function (response) {
                             _this.setState({
                                 visible: false,

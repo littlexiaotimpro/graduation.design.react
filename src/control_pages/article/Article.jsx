@@ -82,8 +82,11 @@ class Article extends Component {
             render: (data, key) => <Button type="danger" onClick={() => {
                 const _this = this;
                 axios.post("http://localhost:8080/article/delete", {
-                    enmedia: key.enmedia,
+                    enarticle: key.enarticle,
                     status: key.status === 1 ? 0 : 1
+                }, {
+                    // 单独配置
+                    withCredentials: true
                 }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
@@ -167,7 +170,10 @@ class Article extends Component {
                 const index = newData.findIndex(item => key === item.key);
                 if (index > -1) {
                     // update
-                    axios.post("http://localhost:8080/article/update", values)
+                    axios.post("http://localhost:8080/article/update", values, {
+                        // 单独配置
+                        withCredentials: true
+                    })
                         .then(function (response) {
                             _this.setState({
                                 visible: false,
@@ -181,7 +187,10 @@ class Article extends Component {
                     })
                 } else {
                     // save
-                    axios.post("http://localhost:8080/article/save", values)
+                    axios.post("http://localhost:8080/article/save", values, {
+                        // 单独配置
+                        withCredentials: true
+                    })
                         .then(function (response) {
                             _this.setState({
                                 visible: false,

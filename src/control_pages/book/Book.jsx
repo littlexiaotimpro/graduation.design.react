@@ -91,6 +91,9 @@ class Book extends Component {
                 axios.post("http://localhost:8080/book/delete", {
                     enbook: key.enbook,
                     status: key.status === 1 ? 0 : 1
+                }, {
+                    // 单独配置
+                    withCredentials: true
                 }).then(function (response) {
                     alert(response.data.msg);
                     if (response.data.code === 1) {
@@ -175,7 +178,10 @@ class Book extends Component {
                 const index = newData.findIndex(item => key === item.key);
                 if (index > -1) {
                     // update
-                    axios.post("http://localhost:8080/book/update", values)
+                    axios.post("http://localhost:8080/book/update", values, {
+                        // 单独配置
+                        withCredentials: true
+                    })
                         .then(function (response) {
                             _this.setState({
                                 visible: false,
@@ -189,7 +195,10 @@ class Book extends Component {
                     })
                 } else {
                     // save
-                    axios.post("http://localhost:8080/book/save", values)
+                    axios.post("http://localhost:8080/book/save", values, {
+                        // 单独配置
+                        withCredentials: true
+                    })
                         .then(function (response) {
                             _this.setState({
                                 visible: false,
