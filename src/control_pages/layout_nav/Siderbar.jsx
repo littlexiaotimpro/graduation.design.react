@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
-import {Layout, Menu, Icon, Avatar} from 'antd';
+import {Layout, Menu, Icon, Avatar, Popover, Card,} from 'antd';
+import moment from "moment";
+import axios from "axios";
 import "./less/Siderbar.css";
 import Navbar from "../navbar/Navbar";
 import Category from "../category/Category";
@@ -13,8 +15,23 @@ import Record from "../record/Record";
 import Log from "../logs/Log";
 
 const {
-    Header, Content, Footer, Sider,
+    Header, Content, Sider,
 } = Layout;
+
+const AdminShow = ({title, adminTime, changeOperator, logout}) => (
+    <div>
+        <Card
+            style={{width: 300}}
+            actions={[<span onClick={changeOperator}>切换管理员</span>, <span onClick={logout}>退出</span>,
+                <Icon type="ellipsis"/>]}
+        >
+            <Card.Meta
+                title={"管理员：" + title}
+                description={"当前时间：" + moment(parseInt(adminTime)).format('YYYY-MM-DD HH:mm:ss')}
+            />
+        </Card>
+    </div>
+);
 
 class Siderbar extends Component {
 
@@ -22,7 +39,8 @@ class Siderbar extends Component {
         super(props)
         this.state = {
             collapsed: false,
-            entity: "Navbar"
+            entity: "Navbar",
+            date: new Date()
         }
     }
 
@@ -31,14 +49,41 @@ class Siderbar extends Component {
     }
 
     componentWillMount() {
+        this.timer = setInterval(() => {
+            this.setState({date: new Date()})
+        }, 1000)
     }
 
     componentDidMount() {
     }
 
+    componentWillUnmount() {
+        clearInterval(this.timer)
+    }
+
     getEntity(value) {
         this.setState({
             entity: value
+        })
+    }
+
+    changeOperator = () => {
+        alert("暂不支持");
+    }
+
+    logout = () => {
+        const _this = this;
+        axios.get("http://localhost:8080/admin/logout", {
+            // 单独配置
+            withCredentials: true
+        }).then(function (response) {
+            if (response.data.code === 0) {
+                alert(response.data.msg);
+            } else {
+                _this.props.history.push("/control/login");
+            }
+        }).catch(function (error) {
+            console.log(error);
         })
     }
 
@@ -56,7 +101,14 @@ class Siderbar extends Component {
                            onCollapse={this.onCollapse}
                     >
                         <div className="logo">
-                            <Avatar style={{backgroundColor: '#7265e6'}} className="avatar" size={64}></Avatar>
+                            <Popover placement="rightTop" title={<span>管理员信息</span>}
+                                     content={<AdminShow title={"admin"}
+                                                         adminTime={this.state.date.getTime()}
+                                                         changeOperator={this.changeOperator}
+                                                         logout={this.logout}/>}
+                                     trigger="hover">
+                                <Avatar style={{backgroundColor: '#7265e6'}} className="avatar" size={64}></Avatar>
+                            </Popover>
                         </div>
                         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1">
