@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Avatar, Carousel, Col, Icon, Layout, List, Row} from 'antd';
+import {Avatar, Card, Carousel, Col, Icon, Layout, List, Row} from 'antd';
 import "./less/listen.css";
 import img1 from "./img/img1.jpg";
 import img2 from "./img/img2.jpg";
@@ -27,6 +27,8 @@ class Listen extends Component {
         super(props);
         this.state = {
             musics: [],
+            music: {},
+            isPlay: false,
         };
     }
 
@@ -48,12 +50,18 @@ class Listen extends Component {
         })
     }
 
+    isplay = () => {
+        this.setState({
+            isPlay: this.state.isPlay ? false : true,
+        })
+    }
+
     render() {
         return (
             <div>
                 <Row gutter={48}>
                     <Col span={16}>
-                        <Layout style={{textAlign: "center", background: '#fff',}}>
+                        <Layout style={{background: '#fff',}}>
                             <Header style={{background: '#fff', padding: 0, minHeight: 280,}}>
                                 <Carousel className={"ant-carousel"} autoplay>
                                     <div className={"slick-slide"}><img src={img1} width={"100%"} height={280}/></div>
@@ -64,10 +72,24 @@ class Listen extends Component {
                             </Header>
                             <Content style={{
                                 marginTop: 24,
-                                padding: 24,
-                                background: '#000',
+                                background: '#fff',
                                 height: 200,
-                            }}>播放列表</Content>
+                            }}><Card
+                                style={{width: "100%"}}
+                                actions={[<Icon style={{fontSize: 27}} type="step-backward"/>,
+                                    this.state.music.caption === undefined ?
+                                        <Icon style={{fontSize: 27}} type="play-circle"/> :
+                                        this.state.isPlay ?
+                                            <Icon style={{fontSize: 27}} type="pause-circle" onClick={this.isplay}/> :
+                                            <Icon style={{fontSize: 27}} type="play-circle" onClick={this.isplay}/>,
+                                    <Icon style={{fontSize: 27}} type="step-forward"/>]}
+                            >
+                                <Card.Meta
+                                    avatar={<Avatar shape="square" src={this.state.music.imgmusic} size={64}/>}
+                                    title={this.state.music.caption === undefined ? null : this.state.music.caption + "---- by " + this.state.music.author}
+                                    description={this.state.music.summary}
+                                />
+                            </Card></Content>
                         </Layout>
                     </Col>
                     <Col span={8}>
@@ -81,7 +103,12 @@ class Listen extends Component {
                             renderItem={item => (
                                 <List.Item
                                     key={item.caption}
-                                    actions={[<span><Icon type="play-circle"/></span>,
+                                    actions={[<span onClick={() => {
+                                        this.setState({
+                                            music: item,
+                                            isPlay: true,
+                                        })
+                                    }}><Icon type="play-circle"/></span>,
                                         item.enarticle === null ?
                                             <IconText type={"read"} href={item.enarticle} text={"暂无乐评"}/> : <span>
                                         <a className={"hover-style"} onClick={() => {
