@@ -102,7 +102,7 @@ class Siderbar extends Component {
                     >
                         <div className="logo">
                             <Popover placement="rightTop" title={<span>管理员信息</span>}
-                                     content={<AdminShow title={"admin"}
+                                     content={<AdminShow title={"暂未实现"}
                                                          adminTime={this.state.date.getTime()}
                                                          changeOperator={this.changeOperator}
                                                          logout={this.logout}/>}
