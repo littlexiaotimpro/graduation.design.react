@@ -35,7 +35,17 @@ class Contact extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 axios.post("http://localhost:8080/contact/save", values).then(function (response) {
-                    console.log(response.data);
+                    if (response.data.code === 1) {
+                        alert(response.data.msg);
+                        _this.props.form.setFieldsValue({
+                            nickname: "",
+                            email: "",
+                            title: "",
+                            content: "",
+                        });
+                    } else {
+                        alert(response.data.msg);
+                    }
                 }).catch(function (error) {
                     console.log(error);
                 })

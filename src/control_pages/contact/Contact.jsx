@@ -13,15 +13,15 @@ class Contact extends Component {
         this.columns = [{
             title: 'ID',
             dataIndex: 'id',
-            width: 100,
+            width: 80,
         }, {
             title: 'nickname',
             dataIndex: 'nickname',
-            width: 100,
+            width: 80,
         }, {
             title: 'Email',
             dataIndex: 'email',
-            width: 200,
+            width: 130,
         }, {
             title: 'Title',
             dataIndex: 'title',
@@ -29,7 +29,7 @@ class Contact extends Component {
         }, {
             title: 'Content',
             dataIndex: 'content',
-            width: 400,
+            width: 360,
         }, {
             title: 'Status',
             dataIndex: 'status',
