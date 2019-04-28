@@ -13,6 +13,7 @@ import Music from "../music/Music";
 import Article from "../article/Article";
 import Record from "../record/Record";
 import Log from "../logs/Log";
+import Contact from "../contact/Contact";
 
 const {
     Header, Content, Sider,
@@ -165,11 +166,17 @@ class Siderbar extends Component {
                                     <Link className="tab-style" to={"/control/log"}>日志管理</Link>
                                 </span>
                             </Menu.Item>
+                            <Menu.Item key="10">
+                                <Icon type="link"/>
+                                <span onClick={this.getEntity.bind(this, "Contact")} className="nav-text">
+                                    <Link className="tab-style" to={"/control/contact"}>留言控制</Link>
+                                </span>
+                            </Menu.Item>
                         </Menu>
                     </Sider>
                     <Layout style={{marginLeft: 200}}>
                         <Header style={{background: '#fff', padding: 0, textAlign: 'center'}}>
-                            <h3>{this.state.entity === "log" ? "日志管理" : this.state.entity + "实体的数据管理"}</h3>
+                            <h3>{this.state.entity === "log" ? "日志管理" : this.state.entity === "Contact" ? "留言控制" : this.state.entity + "实体的数据管理"}</h3>
                         </Header>
                         <Content style={{margin: '18px 16px 0', overflow: 'initial'}}>
                             <div style={{
@@ -186,6 +193,7 @@ class Siderbar extends Component {
                                 <Route path={"/control/article"} component={Article}/>
                                 <Route path={"/control/record"} component={Record}/>
                                 <Route path={"/control/log"} component={Log}/>
+                                <Route path={"/control/contact"} component={Contact}/>
                             </div>
                         </Content>
                     </Layout>

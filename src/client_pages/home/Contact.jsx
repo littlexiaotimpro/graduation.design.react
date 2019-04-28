@@ -4,13 +4,41 @@ import axios from "axios";
 import "./less/home.css";
 
 class Contact extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            contacts: [],
+        };
+    }
+
+    componentWillMount() {
+    }
+
+    componentDidMount() {
+        this.getData();
+    }
+
+    getData = () => {
+        const _this = this;
+        axios.get("http://localhost:8080/contact/client").then(function (response) {
+            _this.setState({
+                contacts: response.data,
+            })
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
 
     handleSubmit = (e) => {
         const _this = this;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+                axios.post("http://localhost:8080/contact/save", values).then(function (response) {
+                    console.log(response.data);
+                }).catch(function (error) {
+                    console.log(error);
+                })
             }
         });
     };
@@ -52,8 +80,8 @@ class Contact extends Component {
                         </Row>
                         <Row gutter={16}>
                             <Col span={24}>
-                                <Form.Item label="信息">
-                                    {getFieldDecorator('suggest', {
+                                <Form.Item label="建议">
+                                    {getFieldDecorator('content', {
                                         rules: [
                                             {
                                                 required: true,
@@ -80,44 +108,14 @@ class Contact extends Component {
                         优秀的建议
                         <Divider/>
                     </div>
-                    <div style={{fontSize: "2em", width: "75%", margin: "0 auto", marginTop: 30, }}>
+                    <div style={{fontSize: "2em", width: "75%", margin: "0 auto", marginTop: 30,}}>
                         <Carousel className={"contact-carousel"} autoplay>
-                            <div className={"contact-slick-slide"}>
-                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut
-                                    dignissim
-                                    nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada
-                                    risus.
-                                    Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.
-
-                                    Tanya - Creative Director</p>
-                            </div>
-                            <div className={"contact-slick-slide"}>
-                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut
-                                    dignissim
-                                    nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada
-                                    risus.
-                                    Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.
-
-                                    Tanya - Creative Director</p>
-                            </div>
-                            <div className={"contact-slick-slide"}>
-                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut
-                                    dignissim
-                                    nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada
-                                    risus.
-                                    Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.
-
-                                    Tanya - Creative Director</p>
-                            </div>
-                            <div className={"contact-slick-slide"}>
-                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut
-                                    dignissim
-                                    nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada
-                                    risus.
-                                    Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.
-
-                                    Tanya - Creative Director</p>
-                            </div>
+                            {this.state.contacts.map(contact => (
+                                <div key={contact.id} className={"contact-slick-slide"}>
+                                    <p>{contact.content}</p>
+                                    <p>by - {contact.nickname}</p>
+                                </div>
+                            ))}
                         </Carousel>
                     </div>
                 </div>
