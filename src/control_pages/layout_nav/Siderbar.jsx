@@ -36,12 +36,15 @@ const AdminShow = ({title, adminTime, changeOperator, logout}) => (
 
 class Siderbar extends Component {
 
+    rootSubmenuKeys = ['sub1', 'sub2'];
+
     constructor(props) {
         super(props)
         this.state = {
             collapsed: false,
             entity: "Navbar",
-            date: new Date()
+            date: new Date(),
+            openKeys: ['sub1'],
         }
     }
 
@@ -88,6 +91,17 @@ class Siderbar extends Component {
         })
     }
 
+    onOpenChange = (openKeys) => {
+        const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+        if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+            this.setState({openKeys});
+        } else {
+            this.setState({
+                openKeys: latestOpenKey ? [latestOpenKey] : [],
+            });
+        }
+    }
+
     render() {
         return <Router>
             <div>
@@ -103,7 +117,7 @@ class Siderbar extends Component {
                     >
                         <div className="logo">
                             <Popover placement="rightTop" title={<span>管理员信息</span>}
-                                     content={<AdminShow title={"暂未实现"}
+                                     content={<AdminShow title={this.props.location.state.admin}
                                                          adminTime={this.state.date.getTime()}
                                                          changeOperator={this.changeOperator}
                                                          logout={this.logout}/>}
@@ -111,55 +125,67 @@ class Siderbar extends Component {
                                 <Avatar style={{backgroundColor: '#7265e6'}} className="avatar" size={64}></Avatar>
                             </Popover>
                         </div>
-                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                            <Menu.Item key="1">
-                                <Icon type="link"/>
-                                <span onClick={this.getEntity.bind(this, "Navbar")} className="nav-text">
+                        <Menu theme="dark" mode="inline"
+                              defaultSelectedKeys={['1']}
+                              openKeys={this.state.openKeys}
+                              onOpenChange={this.onOpenChange}
+                        >
+                            <Menu.SubMenu key="sub1"
+                                          title={<span className="tab-style"><Icon
+                                              type="link"/><span>页面控制</span></span>}>
+                                <Menu.Item key="1">
+                                    <Icon type="link"/>
+                                    <span onClick={this.getEntity.bind(this, "Navbar")} className="nav-text">
                                     <Link className="tab-style" to={"/control/navbar"}>Navbar</Link>
                                 </span>
-                            </Menu.Item>
-                            <Menu.Item key="2">
-                                <Icon type="link"/>
-                                <span onClick={this.getEntity.bind(this, "Category")} className="nav-text">
+                                </Menu.Item>
+                                <Menu.Item key="2">
+                                    <Icon type="link"/>
+                                    <span onClick={this.getEntity.bind(this, "Category")} className="nav-text">
                                     <Link className="tab-style" to={"/control/category"}>Category</Link>
                                 </span>
-                            </Menu.Item>
-                            <Menu.Item key="3">
-                                <Icon type="link"/>
-                                <span onClick={this.getEntity.bind(this, "Tags")} className="nav-text">
+                                </Menu.Item>
+                                <Menu.Item key="3">
+                                    <Icon type="link"/>
+                                    <span onClick={this.getEntity.bind(this, "Tags")} className="nav-text">
                                     <Link className="tab-style" to={"/control/tags"}>Tags</Link>
                                 </span>
-                            </Menu.Item>
-                            <Menu.Item key="4">
-                                <Icon type="link"/>
-                                <span onClick={this.getEntity.bind(this, "Book")} className="nav-text">
+                                </Menu.Item>
+                            </Menu.SubMenu>
+                            <Menu.SubMenu key="sub2"
+                                          title={<span className="tab-style"><Icon
+                                              type="link"/><span>实体管理</span></span>}>
+                                <Menu.Item key="4">
+                                    <Icon type="link"/>
+                                    <span onClick={this.getEntity.bind(this, "Book")} className="nav-text">
                                     <Link className="tab-style" to={"/control/book"}>Book</Link>
                                 </span>
-                            </Menu.Item>
-                            <Menu.Item key="5">
-                                <Icon type="link"/>
-                                <span onClick={this.getEntity.bind(this, "Media")} className="nav-text">
+                                </Menu.Item>
+                                <Menu.Item key="5">
+                                    <Icon type="link"/>
+                                    <span onClick={this.getEntity.bind(this, "Media")} className="nav-text">
                                     <Link className="tab-style" to={"/control/media"}>Media</Link>
                                 </span>
-                            </Menu.Item>
-                            <Menu.Item key="6">
-                                <Icon type="link"/>
-                                <span onClick={this.getEntity.bind(this, "Music")} className="nav-text">
+                                </Menu.Item>
+                                <Menu.Item key="6">
+                                    <Icon type="link"/>
+                                    <span onClick={this.getEntity.bind(this, "Music")} className="nav-text">
                                     <Link className="tab-style" to={"/control/music"}>Music</Link>
                                 </span>
-                            </Menu.Item>
-                            <Menu.Item key="7">
-                                <Icon type="link"/>
-                                <span onClick={this.getEntity.bind(this, "Article")} className="nav-text">
+                                </Menu.Item>
+                                <Menu.Item key="7">
+                                    <Icon type="link"/>
+                                    <span onClick={this.getEntity.bind(this, "Article")} className="nav-text">
                                     <Link className="tab-style" to={"/control/article"}>Article</Link>
                                 </span>
-                            </Menu.Item>
-                            <Menu.Item key="8">
-                                <Icon type="link"/>
-                                <span onClick={this.getEntity.bind(this, "Record")} className="nav-text">
+                                </Menu.Item>
+                                <Menu.Item key="8">
+                                    <Icon type="link"/>
+                                    <span onClick={this.getEntity.bind(this, "Record")} className="nav-text">
                                     <Link className="tab-style" to={"/control/record"}>Record</Link>
                                 </span>
-                            </Menu.Item>
+                                </Menu.Item>
+                            </Menu.SubMenu>
                             <Menu.Item key="9">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "log")} className="nav-text">

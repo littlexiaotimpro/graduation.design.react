@@ -93,7 +93,7 @@ class About extends Component {
                         </Col>
                         <Col className="gutter-row" span={4}>
                             <div className="gutter-box">
-                                <p>产品</p>
+                                <p>项目</p>
                                 <p><a href={"#"}>即我（本站）</a></p>
                                 <p><a href={"#"}>模拟农场</a></p>
                                 <p><a href={"#"}>移动电商</a></p>

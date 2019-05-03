@@ -58,7 +58,7 @@ class Login extends Component {
                         message: response.data
                     })
                     if (response.data.code === 1) {
-                        _this.props.history.push("/control/manage");
+                        _this.props.history.push({pathname: "/control/manage", state: {admin: values.account}});
                     } else {
                         alert(response.data.msg);
                     }
