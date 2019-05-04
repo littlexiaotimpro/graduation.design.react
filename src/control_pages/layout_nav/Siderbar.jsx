@@ -4,6 +4,7 @@ import {Layout, Menu, Icon, Avatar, Popover, Card,} from 'antd';
 import moment from "moment";
 import axios from "axios";
 import "./less/Siderbar.css";
+import UserControl from "../admin/UserControl";
 import Navbar from "../navbar/Navbar";
 import Category from "../category/Category";
 import Tags from "../tags/Tags";
@@ -130,6 +131,12 @@ class Siderbar extends Component {
                               openKeys={this.state.openKeys}
                               onOpenChange={this.onOpenChange}
                         >
+                            <Menu.Item key="11">
+                                <Icon type="link"/>
+                                <span onClick={this.getEntity.bind(this, "admin")} className="nav-text">
+                                    <Link className="tab-style" to={"/control/user"}>用户信息</Link>
+                                </span>
+                            </Menu.Item>
                             <Menu.SubMenu key="sub1"
                                           title={<span className="tab-style"><Icon
                                               type="link"/><span>页面控制</span></span>}>
@@ -202,7 +209,7 @@ class Siderbar extends Component {
                     </Sider>
                     <Layout style={{marginLeft: 200}}>
                         <Header style={{background: '#fff', padding: 0, textAlign: 'center'}}>
-                            <h3>{this.state.entity === "log" ? "日志管理" : this.state.entity === "Contact" ? "留言控制" : this.state.entity + "实体的数据管理"}</h3>
+                            <h3>{this.state.entity === "log" ? "日志管理" : this.state.entity === "Contact" ? "留言控制" : this.state.entity === "admin" ? "用户信息" : this.state.entity + "实体的数据管理"}</h3>
                         </Header>
                         <Content style={{margin: '18px 16px 0', overflow: 'initial'}}>
                             <div style={{
@@ -210,6 +217,7 @@ class Siderbar extends Component {
                                 background: '#fff',
                                 textAlign: 'center',
                             }}>
+                                <Route exact path={"/control/user"} component={UserControl}/>
                                 <Route exact path={"/control/navbar"} component={Navbar}/>
                                 <Route path={"/control/category"} component={Category}/>
                                 <Route path={"/control/tags"} component={Tags}/>

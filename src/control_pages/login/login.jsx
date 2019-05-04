@@ -17,7 +17,6 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            message: {},
             visible: false,
         }
     }
@@ -54,9 +53,6 @@ class Login extends Component {
                     withCredentials: true
                 }).then(function (response) {
                     console.log(response);
-                    _this.setState({
-                        message: response.data
-                    })
                     if (response.data.code === 1) {
                         _this.props.history.push({pathname: "/control/manage", state: {admin: values.account}});
                     } else {
