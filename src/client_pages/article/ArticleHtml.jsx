@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import "./themes/vue.css";
+import "./less/imgStyle.css";
 
 class ArticleHtml extends Component {
     render() {
