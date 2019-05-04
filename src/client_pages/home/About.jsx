@@ -1,7 +1,32 @@
 import React, {Component} from "react";
 import {Card, Col, Divider, Row} from "antd";
+import axios from "axios";
+import moment from "moment";
 
 class About extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userCount: "",
+            untilDate: new Date(),
+        }
+    }
+
+    componentDidMount() {
+        this.getUserCount();
+    }
+
+    getUserCount = () => {
+        const _this = this;
+        axios.get("http://localhost:8080/contact/count").then(function (response) {
+            _this.setState({
+                userCount: response.data,
+            })
+        }).catch(function (error) {
+            console.log(error)
+        })
+    }
+
     render() {
         return (
             <div style={{width: "100%", marginTop: 100}}>
@@ -27,13 +52,16 @@ class About extends Component {
                     <Col span={8}>
                         <Card bordered={true} style={{height: 150}}>
                             <p>目前用户数 &nbsp;&nbsp;<span
-                                style={{fontSize: "3em", textDecoration: "underline",}}><strong>0</strong></span></p>
+                                style={{
+                                    fontSize: "3em",
+                                    textDecoration: "underline",
+                                }}><strong>{this.state.userCount}</strong></span></p>
                         </Card>
                     </Col>
                 </Row>
 
                 <p style={{textAlign: "center", fontSize: "1.2em", width: "43%", margin: "0 auto", marginTop: 30}}>
-                    * 截至2019年4月
+                    * 截至{moment(parseInt(this.state.untilDate.getTime())).format('YYYY年MM月')}
                 </p>
 
                 <p style={{textAlign: "center", fontSize: "1.2em", width: "43%", margin: "0 auto", marginTop: 60}}>
@@ -125,7 +153,7 @@ class About extends Component {
                     </Row>
                 </div>
                 <div style={{width: "100%", height: 50,}}>
-                    <p style={{fontSize: "1.2em",textAlign: 'center', padding: 10}}>
+                    <p style={{fontSize: "1.2em", textAlign: 'center', padding: 10}}>
                         Copyright ©2019 Hosted by Ant Design and React Create by HC
                     </p>
                 </div>
