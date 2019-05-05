@@ -63,8 +63,8 @@ class UserControl extends Component {
             users: [],
             visible: false,
             confirmDirty: false,
-            selectUser: "",
-            userKey: "",
+            selectUser: null,
+            userKey: null,
         };
     }
 

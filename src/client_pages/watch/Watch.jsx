@@ -143,7 +143,7 @@ class Watch extends Component {
                                                     data.push(v);
                                                     this.setState({
                                                         message: data,
-                                                        mediaKey: media.key
+                                                        mediaKey: this.state.mediaKey === media.key ? null : media.key
                                                     })
                                                 }}>{v.caption}</Button>)}
                                                 description={v.showtime}/>
