@@ -144,15 +144,15 @@ class Contact extends Component {
                         <Col className="gutter-row" span={4}>
                             <div className="gutter-box">
                                 <p>项目</p>
-                                <p><a href={"#"}>即我（本站）</a></p>
-                                <p><a href={"#"}>模拟农场</a></p>
-                                <p><a href={"#"}>移动电商</a></p>
+                                <p><a href={"javascript:;"}>即我（本站）</a></p>
+                                <p><a href={"javascript:;"}>模拟农场</a></p>
+                                <p><a href={"javascript:;"}>移动电商</a></p>
                             </div>
                         </Col>
                         <Col className="gutter-row" span={4}>
                             <div className="gutter-box">
                                 <p>平台</p>
-                                <p><a href={"#"}>暂无</a></p>
+                                <p><a href={"javascript:;"}>暂无</a></p>
                             </div>
                         </Col>
                         <Col className="gutter-row" span={4}>
@@ -160,16 +160,16 @@ class Contact extends Component {
                                 <p>支持</p>
                                 <p><a href={"https://github.com/"}>Github</a></p>
                                 <p><a href={"https://ant.design/docs/react/introduce-cn"}>Ant Design</a></p>
-                                <p><a href={"#"}>React系列</a></p>
-                                <p><a href={"#"}>Google</a></p>
+                                <p><a href={"javascript:;"}>React系列</a></p>
+                                <p><a href={"javascript:;"}>Google</a></p>
                             </div>
                         </Col>
                         <Col className="gutter-row" span={4}>
                             <div className="gutter-box">
                                 <p>开发</p>
-                                <p><a href={"#"}>关于</a></p>
-                                <p><a href={"#"}>博客</a></p>
-                                <p><a href={"#"}>联系</a></p>
+                                <p><a href={"javascript:;"}>关于</a></p>
+                                <p><a href={"javascript:;"}>博客</a></p>
+                                <p><a href={"javascript:;"}>联系</a></p>
                             </div>
                         </Col>
                     </Row>

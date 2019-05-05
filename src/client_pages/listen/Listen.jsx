@@ -131,7 +131,7 @@ class Listen extends Component {
                                 >
                                     <List.Item.Meta
                                         avatar={<Avatar shape="square" src={item.imgmusic} size={64}/>}
-                                        title={<a href="#">{item.caption}</a>}
+                                        title={<a href="javascript:;">{item.caption}</a>}
                                         description={"by " + item.author}
                                     />
                                 </List.Item>

@@ -72,7 +72,7 @@ class About extends Component {
                     <Divider/>
                     <Col className="gutter-row" span={12}>
                         <div className="gutter-box">
-                            <p><strong><a href={"#"} style={{color: "#408DD2"}}>创建者</a></strong></p>
+                            <p><strong><a href={"javascript:;"} style={{color: "#408DD2"}}>创建者</a></strong></p>
                             <p style={{fontSize: "0.8em",}}>HC，2019年7月于江西财经大学毕业，毕业后通过校招进入一家外包公司工作，目标是走技术路，一条路走到黑...</p>
                         </div>
                     </Col>
@@ -87,13 +87,13 @@ class About extends Component {
                 <Row gutter={48} style={{width: "75%", fontSize: "1.3em", margin: "0 auto", marginTop: 20}}>
                     <Col className="gutter-row" span={12}>
                         <div className="gutter-box">
-                            <p><strong><a href={"#"} style={{color: "#408DD2"}}>事实</a></strong></p>
+                            <p><strong><a href={"javascript:;"} style={{color: "#408DD2"}}>事实</a></strong></p>
                             <p style={{fontSize: "0.8em",}}>本站开发的日志展示，让使用者了解本站的开发过程，及其中遇到的问题及解决方法...</p>
                         </div>
                     </Col>
                     <Col className="gutter-row" span={12}>
                         <div className="gutter-box">
-                            <p><strong><a href={"#"} style={{color: "#408DD2"}}>网站状态</a></strong></p>
+                            <p><strong><a href={"javascript:;"} style={{color: "#408DD2"}}>网站状态</a></strong></p>
                             <p style={{fontSize: "0.8em",}}>开发者会致力于不断的完善项目，对网站上线以后，监控其服务状态，在网站出现任何问题时，会在此处优先告知使用者...</p>
                         </div>
                     </Col>
@@ -102,7 +102,7 @@ class About extends Component {
                 <Row gutter={48} style={{width: "75%", fontSize: "1.3em", margin: "0 auto", marginTop: 20}}>
                     <Col className="gutter-row" span={12}>
                         <div className="gutter-box">
-                            <p><strong><a href={"#"} style={{color: "#408DD2"}}>关于本站</a></strong></p>
+                            <p><strong><a href={"javascript:;"} style={{color: "#408DD2"}}>关于本站</a></strong></p>
                             <p style={{fontSize: "0.8em",}}>本站作为开发者的毕业设计，作为一个简单的个人性质的网站，用来分享信息，收集数据...</p>
                         </div>
                     </Col>
@@ -122,15 +122,15 @@ class About extends Component {
                         <Col className="gutter-row" span={4}>
                             <div className="gutter-box">
                                 <p>项目</p>
-                                <p><a href={"#"}>即我（本站）</a></p>
-                                <p><a href={"#"}>模拟农场</a></p>
-                                <p><a href={"#"}>移动电商</a></p>
+                                <p><a href={"javascript:;"}>即我（本站）</a></p>
+                                <p><a href={"javascript:;"}>模拟农场</a></p>
+                                <p><a href={"javascript:;"}>移动电商</a></p>
                             </div>
                         </Col>
                         <Col className="gutter-row" span={4}>
                             <div className="gutter-box">
                                 <p>平台</p>
-                                <p><a href={"#"}>暂无</a></p>
+                                <p><a href={"javascript:;"}>暂无</a></p>
                             </div>
                         </Col>
                         <Col className="gutter-row" span={4}>
@@ -138,16 +138,16 @@ class About extends Component {
                                 <p>支持</p>
                                 <p><a href={"https://github.com/"}>Github</a></p>
                                 <p><a href={"https://ant.design/docs/react/introduce-cn"}>Ant Design</a></p>
-                                <p><a href={"#"}>React系列</a></p>
-                                <p><a href={"#"}>Google</a></p>
+                                <p><a href={"javascript:;"}>React系列</a></p>
+                                <p><a href={"javascript:;"}>Google</a></p>
                             </div>
                         </Col>
                         <Col className="gutter-row" span={4}>
                             <div className="gutter-box">
                                 <p>开发</p>
-                                <p><a href={"#"}>关于</a></p>
-                                <p><a href={"#"}>博客</a></p>
-                                <p><a href={"#"}>联系</a></p>
+                                <p><a href={"javascript:;"}>关于</a></p>
+                                <p><a href={"javascript:;"}>博客</a></p>
+                                <p><a href={"javascript:;"}>联系</a></p>
                             </div>
                         </Col>
                     </Row>
