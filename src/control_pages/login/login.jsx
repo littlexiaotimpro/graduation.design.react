@@ -32,8 +32,7 @@ class Login extends Component {
         });
     }
 
-    handleCancel = (e) => {
-        console.log(e);
+    handleCancel = () => {
         this.setState({
             visible: false,
         });
@@ -44,7 +43,6 @@ class Login extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
                 axios.post("http://localhost:8080/admin/login", {
                     account: values.account,
                     password: values.password

@@ -84,9 +84,8 @@ class Siderbar extends Component {
         }).then(function (response) {
             if (response.data.code === 0) {
                 alert(response.data.msg);
-            } else {
-                _this.props.history.push("/control/login");
             }
+            _this.props.history.push("/control/login");
         }).catch(function (error) {
             console.log(error);
         })
@@ -134,7 +133,10 @@ class Siderbar extends Component {
                             <Menu.Item key="11">
                                 <Icon type="link"/>
                                 <span onClick={this.getEntity.bind(this, "admin")} className="nav-text">
-                                    <Link className="tab-style" to={"/control/user"}>用户信息</Link>
+                                    <Link className="tab-style" to={{
+                                        pathname: "/control/user",
+                                        state: {nowUser: this.props.location.state.admin}
+                                    }}>用户信息</Link>
                                 </span>
                             </Menu.Item>
                             <Menu.SubMenu key="sub1"
@@ -217,7 +219,7 @@ class Siderbar extends Component {
                                 background: '#fff',
                                 textAlign: 'center',
                             }}>
-                                <Route exact path={"/control/user"} component={UserControl}/>
+                                <Route path={"/control/user"} component={UserControl}/>
                                 <Route exact path={"/control/navbar"} component={Navbar}/>
                                 <Route path={"/control/category"} component={Category}/>
                                 <Route path={"/control/tags"} component={Tags}/>

@@ -225,7 +225,6 @@ class Navbar extends Component {
     getData() {
         const _this = this;
         axios.get("http://localhost:8080/navbar/control").then(function (response) {
-            console.log(response);
             let values = [];
             for (let i = 0; i < response.data.length; i++) {
                 response.data[i].key = response.data[i].ennav;
