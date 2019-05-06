@@ -1,0 +1,16 @@
+div.notification-box {
+  position: absolute;
+  top: 100px;
+  right: 50px;
+}
+div.notification-box .notification-hover {
+  border: 1px solid black;
+  outline-style: none;
+  color: black;
+}
+div.notification-box .notification-hover:hover {
+  background: black;
+  outline-style: none;
+  color: #fff;
+}
+/*# sourceMappingURL=userControl.css.map */
