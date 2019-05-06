@@ -22,10 +22,10 @@ const CollectionCreateForm = Form.create()(
                     onOk={onCreate}
                 >
                     <Form layout="vertical">
-                        <Form.Item label="password">
+                        <Form.Item label="新密码">
                             {getFieldDecorator('password', {
                                 rules: [{
-                                    required: true, message: 'Please input your password!',
+                                    required: true, message: '请输入您的新密码!',
                                 }, {
                                     validator: onValidate,
                                 }],
@@ -35,10 +35,10 @@ const CollectionCreateForm = Form.create()(
                                                 type={"password"}/>
                             )}
                         </Form.Item>
-                        <Form.Item label="Confirm Password">
+                        <Form.Item label="确认密码">
                             {getFieldDecorator('confirm', {
                                 rules: [{
-                                    required: true, message: 'Please confirm your password!',
+                                    required: true, message: '请再次输入您的密码!',
                                 }, {
                                     validator: onCompare,
                                 }],
@@ -223,7 +223,7 @@ class UserControl extends Component {
     compareToFirstPassword = (rule, value, callback) => {
         const form = this.formRef.props.form;
         if (value && value !== form.getFieldValue('password')) {
-            callback('Two passwords that you enter is inconsistent!');
+            callback('两次输入的密码不一致!');
         } else {
             callback();
         }
