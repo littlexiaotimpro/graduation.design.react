@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Icon, Input, Button, Layout, Modal,} from 'antd';
+import {message, Form, Icon, Input, Button, Layout, Modal,} from 'antd';
 import "./less/login.css";
 import axios from "axios";
 // import PropTypes from 'prop-types';
@@ -52,9 +52,10 @@ class Login extends Component {
                 }).then(function (response) {
                     console.log(response);
                     if (response.data.code === 1) {
+                        message.success(response.data.msg);
                         _this.props.history.push({pathname: "/control/manage", state: {admin: values.account}});
                     } else {
-                        alert(response.data.msg);
+                        message.error(response.data.msg);
                     }
                 }).catch(function (error) {
                     console.log(error);

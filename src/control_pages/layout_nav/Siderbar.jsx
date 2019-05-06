@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
-import {Layout, Menu, Icon, Avatar, Popover, Card,} from 'antd';
+import {Layout, Menu, Icon, Avatar, Popover, Card, message,} from 'antd';
 import moment from "moment";
 import axios from "axios";
 import "./less/Siderbar.css";
@@ -83,7 +83,9 @@ class Siderbar extends Component {
             withCredentials: true
         }).then(function (response) {
             if (response.data.code === 0) {
-                alert(response.data.msg);
+                message.warning(response.data.msg);
+            } else {
+                message.success(response.data.msg);
             }
             _this.props.history.push("/control/login");
         }).catch(function (error) {

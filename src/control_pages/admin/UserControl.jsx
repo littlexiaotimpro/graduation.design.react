@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import moment from "moment";
 import axios from "axios";
-import {Avatar, Button, Col, Form, Icon, Input, Modal, Row, Select} from "antd";
+import {Affix, Avatar, Badge, Button, Col, Form, Icon, Input, Modal, Row, Select, notification} from "antd";
+import "./less/userControl.css";
 
 const CollectionCreateForm = Form.create()(
     // eslint-disable-next-line
@@ -54,6 +55,38 @@ const CollectionCreateForm = Form.create()(
         }
     }
 );
+
+const openNotification = () => {
+    const notificationContent = [{
+        key: "notification1",
+        message: "通知一",
+        description: "此系统的管理后台只有管理员可以实现登录，普通用户没有权限。"
+    }, {
+        key: "notification2",
+        message: "通知二",
+        description: "管理员登录后页面优先显示当前管理员信息，系统给予登录的管理员修改信息权限，登录者在当前用户信息页仅限修改其自身的密码，不可修改其它数据。"
+    }, {
+        key: "notification3",
+        message: "通知三",
+        description: "登录的管理员可以通过左侧的用户选择，选择其它用户，查看其数据信息，权限仅限修改其它用户或管理员的密码、状态及操作权限。"
+    }];
+
+    notificationContent.map(noti => {
+        const key = noti.key;
+        const btn = (
+            <Button type="primary" size="small" onClick={() => notification.close(key)}>
+                关闭
+            </Button>
+        );
+        notification.open({
+            message: noti.message,
+            description: noti.description,
+            btn,
+            key,
+            placement: "bottomRight",
+        });
+    })
+};
 
 class UserControl extends Component {
 
@@ -208,6 +241,14 @@ class UserControl extends Component {
         const {getFieldDecorator} = this.props.form;
         return (
             <div>
+                <div className={"notification-box"}>
+                    <Affix offsetTop={10}>
+                        <Badge count={3}>
+                            <Button className={"notification-hover"} shape={"square"} icon="notification"
+                                    onClick={openNotification}/>
+                        </Badge>
+                    </Affix>
+                </div>
                 <Row gutter={24} style={{width: "60%", minHeight: 300, margin: "20px auto"}}>
                     <Col className="gutter-row" span={6}>
                         <div className="gutter-box" style={{padding: 10,}}>
