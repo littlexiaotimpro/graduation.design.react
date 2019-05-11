@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Layout, Menu, Input, Row, Col, Drawer, Divider, Icon, AutoComplete, Avatar,} from 'antd';
+import {Layout, Menu, Input, Row, Col, Drawer, Divider, Icon, AutoComplete, Dropdown, Avatar, message} from 'antd';
 import "./less/tabbar.css";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import Home from "../home/Home";
@@ -133,7 +133,22 @@ class TabBar extends Component {
         );
     }
 
+    handleMenuClick = (value) => {
+        message.info(value);
+    }
+
     render() {
+        const menu = (
+            <Menu>
+                <Menu.Item key="1"><a
+                    href={"/control/login"}><Icon
+                    type="setting"/>&nbsp; Controller</a></Menu.Item>
+                <Menu.Divider/>
+                <Menu.Item key="2" onClick={() => this.handleMenuClick("注销登录")} disabled><Icon
+                    type="logout"/>&nbsp;Log
+                    out</Menu.Item>
+            </Menu>
+        );
         return (<Router>
             <div>
                 <Layout className="layout">
@@ -176,14 +191,21 @@ class TabBar extends Component {
                                     }} className={"search-color"} onClick={this.getDataSaveRecord}><Icon
                                         type={"search"}/></Link>)}/></AutoComplete>
                             </div>
-                            <div onClick={this.showDrawer} style={{
-                                width: 40,
-                                height: 40,
-                                marginTop: 12,
-                                float: "right",
-                            }}>
-                                <Avatar style={{marginTop: -24, backgroundColor: '#7265e6'}}>斯</Avatar>
+                            <div style={{float: "right"}}>
+                                <Dropdown.Button
+                                    overlay={menu}
+                                >
+                                    log in
+                                </Dropdown.Button>
                             </div>
+                            {/*<div onClick={this.showDrawer} style={{
+                            width: 40,
+                            height: 40,
+                            marginTop: 12,
+                            float: "right",
+                            }}>
+                            <Avatar style={{marginTop: -24, backgroundColor: '#7265e6'}}>斯</Avatar>
+                            </div>*/}
                         </div>
                     </Header>
                     <Content style={{padding: '0 50px', background: '#fff',}}>
