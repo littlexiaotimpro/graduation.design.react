@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Button, Checkbox, List, Col, Row, Steps, Timeline, Icon} from "antd";
+import {Button, Checkbox, Col, Row, Steps, Timeline, Icon, Modal, Divider, Input, Tooltip} from "antd";
 import "./less/watch.css";
 
 const IconText = ({type, text, href}) => (
@@ -14,12 +14,13 @@ class Watch extends Component {
         super(props);
         this.state = {
             medias: [],
-            message: [],
+            message: null,
             mediaKey: null,
             tags: [],
             cates: [],
             checkedCate: [],
             checkedTag: [],
+            visible: false,
         }
     }
 
@@ -101,6 +102,18 @@ class Watch extends Component {
         console.log(checkedValues);
     }
 
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+
+    handleCancel = () => {
+        this.setState({
+            visible: false,
+        });
+    }
+
     render() {
         return (<div>
             {this.state.checkedCate.length === 0 ? null : (
@@ -143,57 +156,109 @@ class Watch extends Component {
                                                     data.push(v);
                                                     this.setState({
                                                         message: data,
-                                                        mediaKey: this.state.mediaKey === media.key ? null : media.key
+                                                        visible: true,
+                                                        mediaKey: media.key
                                                     })
                                                 }}>{v.caption}</Button>)}
                                                 description={v.showtime}/>
                                 ))}
                             </Steps>
                             {this.state.mediaKey === media.key ?
-                                (<div key={this.state.mediaKey}
-                                      className="steps-content">
-                                    {this.state.message.length <= 0 ? null :
-                                        (<List
-                                                itemLayout="vertical"
-                                                size="large"
-                                                dataSource={this.state.message}
-                                                renderItem={item => (
-                                                    <List.Item
-                                                        key={item.enmedia}
-                                                        actions={[item.enarticle === null ?
-                                                            <IconText type={"read"} href={item.enarticle}
-                                                                      text={"暂无影评"}/> : <span>
-                                                                    <a className={"hover-style"} onClick={() => {
-                                                                        const _this = this;
-                                                                        axios.post("http://localhost:8080/article/primary", {
-                                                                            enarticle: item.enarticle
-                                                                        }).then(function (response) {
-                                                                            _this.props.history.push({
-                                                                                pathname: "readArticle",
-                                                                                state: {
-                                                                                    htmlData: response.data,
-                                                                                }
-                                                                            })
-                                                                        }).catch(function (error) {
-                                                                            console.log(error)
-                                                                        })
-                                                                    }
-                                                                    }><Icon type={"read"}/>&nbsp;&nbsp;{" " + "影评"}</a>
-                                                                </span>]}
-                                                        extra={<img height={240} alt={item.caption}
-                                                                    src={item.imgmedia}/>}
-                                                    >
-                                                        <List.Item.Meta
-                                                            title={item.caption}
-                                                            description={"上映时间：" + item.showtime}
-                                                        />
-                                                        {"简介：" + item.summary}
-                                                    </List.Item>
-                                                )}
-                                            />
-                                        )
-                                    }
-                                </div>) : null}
+                                this.state.message === null ? null :
+                                    (<Modal
+                                        title="电影介绍"
+                                        key={this.state.mediaKey}
+                                        visible={this.state.visible}
+                                        footer={<Row>
+                                            <Col span={24} className={"media-download"}>
+                                                <div>
+                                                    <Button href={this.state.message[0].bluray720}
+                                                            className={"media-down"}>BluRay 720P</Button>
+                                                    <Input
+                                                        className={"media-magnet"}
+                                                        value={this.state.message[0].bluray720}
+                                                        suffix={
+                                                            <Tooltip title="可能会有版权受限问题">
+                                                                <Icon type="info-circle"
+                                                                      style={{color: 'rgba(0,0,0,.45)'}}/>
+                                                            </Tooltip>
+                                                        }
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <Button href={this.state.message[0].bluray1080}
+                                                            className={"media-down"}>BluRay 1080P</Button>
+                                                    <Input
+                                                        className={"media-magnet"}
+                                                        value={this.state.message[0].bluray1080}
+                                                        suffix={
+                                                            <Tooltip title="可能会有版权受限问题">
+                                                                <Icon type="info-circle"
+                                                                      style={{color: 'rgba(0,0,0,.45)'}}/>
+                                                            </Tooltip>
+                                                        }
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <Button href={this.state.message[0].bluraydisk}
+                                                            className={"media-down"}>BluRay 原盘</Button>
+                                                    <Input
+                                                        className={"media-magnet"}
+                                                        value={this.state.message[0].bluraydisk}
+                                                        suffix={
+                                                            <Tooltip title="可能会有版权受限问题">
+                                                                <Icon type="info-circle"
+                                                                      style={{color: 'rgba(0,0,0,.45)'}}/>
+                                                            </Tooltip>
+                                                        }
+                                                    />
+                                                </div>
+                                            </Col>
+                                        </Row>}
+                                        onCancel={this.handleCancel}
+                                    >
+                                        <Row gutter={6}>
+                                            <Col span={10}>
+                                                <img style={{float: "right"}} height={240}
+                                                     src={this.state.message[0].imgmedia}/>
+                                            </Col>
+                                            <Col span={2}>
+                                                <Divider style={{border: "1px", height: 240}} type="vertical"/>
+                                            </Col>
+                                            <Col span={12}>
+                                                <p><span style={{
+                                                    fontSize: "1.5em",
+                                                    fontWeight: 2
+                                                }}>{this.state.message[0].caption}</span></p>
+                                                <p>上映时间：{this.state.message[0].showtime}</p>
+                                                <p style={{height: 110,}}>简介：{this.state.message[0].summary}</p>
+                                                <p>
+                                                    <a href={"javascript:;"}
+                                                       onClick={() => {
+                                                           const _this = this;
+                                                           if (_this.state.message[0].enarticle != null) {
+                                                               axios.post("http://localhost:8080/article/primary", {
+                                                                   enarticle: _this.state.message[0].enarticle
+                                                               }).then(function (response) {
+                                                                   _this.props.history.push({
+                                                                       pathname: "readArticle",
+                                                                       state: {
+                                                                           htmlData: response.data,
+                                                                       }
+                                                                   })
+                                                               }).catch(function (error) {
+                                                                   console.log(error)
+                                                               })
+                                                           }
+                                                       }
+                                                       }>
+                                                        影评
+                                                    </a>
+                                                </p>
+                                            </Col>
+                                        </Row>
+                                    </Modal>)
+                                : null}
                         </Timeline.Item>
                     ))}
                 </Timeline>
