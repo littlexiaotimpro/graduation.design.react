@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import moment from "moment";
 import axios from "axios";
-import {Button, Table, Select, Drawer, Form, Col, Row, Input, Upload, Modal, Icon} from 'antd';
+import {Button, Table, Select, Drawer, Form, Col, Row, Input, Upload, Modal, Icon, Divider} from 'antd';
 import "./less/Media.css";
 
 const Option = Select.Option;
@@ -11,10 +11,14 @@ class Media extends Component {
         super(props);
         this.state = {
             medias: [],
+            chooseMedia: null,
+            articles: [],
+            chooseArticle: null,
+            chooseKey: "iron_man",
             categories: [],
-            chooseCate: "",
+            chooseCate: null,
             navbars: [],
-            chooseNav: "",
+            chooseNav: null,
             tags: [],
             record: [],
             visible: false,
@@ -130,6 +134,9 @@ class Media extends Component {
             ennav: record.ennav,
             entag: record.entag,
             showtime: record.showtime,
+            bluray720: record.bluray720,
+            bluray1080: record.bluray1080,
+            bluraydisk: record.bluraydisk,
             status: record.status,
             summary: record.summary
         });
@@ -231,8 +238,9 @@ class Media extends Component {
         axios.all([axios.get("http://localhost:8080/media/control"),
             axios.get("http://localhost:8080/category/caption"),
             axios.get("http://localhost:8080/navbar/caption"),
-            axios.get("http://localhost:8080/tags/caption")])
-            .then(axios.spread(function (medias, cate, nav, tag) {
+            axios.get("http://localhost:8080/tags/caption"),
+            axios.get("http://localhost:8080/article/using")])
+            .then(axios.spread(function (medias, cate, nav, tag, articles) {
                 // console.log(medias);
                 // console.log(cate);
                 // console.log(tag);
@@ -257,11 +265,35 @@ class Media extends Component {
                     nav.data[i].key = nav.data[i].ennav;
                     navs.push(nav.data[i]);
                 }
+                let arts = [];
+                for (let i = 0; i < articles.data.length; i++) {
+                    articles.data[i].key = articles.data[i].enarticle;
+                    arts.push(articles.data[i]);
+                }
+                // 初始化电影数据
+                const newData = [...values];
+                let key = _this.state.chooseKey;
+                const index = newData.findIndex(item => key === item.key);
+                let m = null;
+                if (index > -1) {
+                    m = values[index];
+                }
+                // 初始化影评数据
+                const newArticleData = [...arts];
+                let keyArticle = m.enarticle;
+                const indexArticle = newArticleData.findIndex(item => keyArticle === item.key);
+                let art = null;
+                if (indexArticle > -1) {
+                    art = arts[indexArticle];
+                }
                 _this.setState({
                     medias: values,
+                    chooseMedia: m,
+                    chooseArticle: art,
                     categories: cates,
                     navbars: navs,
                     tags: tagss,
+                    articles: arts,
                 })
             })).catch(function (error) {
             console.log(error);
@@ -290,12 +322,131 @@ class Media extends Component {
             </Button>
         );
         return (<div>
-            <Table
-                bordered
-                dataSource={this.state.medias}
-                columns={this.columns}
-                scroll={{x: 1850}}
-            />
+            {/*<Table*/}
+            {/*bordered*/}
+            {/*dataSource={this.state.medias}*/}
+            {/*columns={this.columns}*/}
+            {/*scroll={{x: 1850}}*/}
+            {/*/>*/}
+            <div style={{width: "80%", margin: "0 auto",}}>
+                <Select style={{width: 200, marginRight: 20,}} defaultValue={"iron_man"} onChange={(value) => {
+                    // 初始化电影数据
+                    const newData = [...this.state.medias];
+                    let key = value;
+                    const index = newData.findIndex(item => key === item.key);
+                    let m = null;
+                    if (index > -1) {
+                        m = this.state.medias[index];
+                    }
+                    // 初始化影评数据
+                    const newArticleData = [...this.state.articles];
+                    let keyArticle = m.enarticle;
+                    const indexArticle = newArticleData.findIndex(item => keyArticle === item.key);
+                    let art = null;
+                    if (indexArticle > -1) {
+                        art = this.state.articles[indexArticle];
+                    }
+                    this.setState({
+                        chooseKey: value,
+                        chooseMedia: m,
+                        chooseArticle: art
+                    })
+                }}>
+                    {this.state.medias.map((media) => (
+                        <Option key={media.enmedia}
+                                value={media.enmedia}>{media.caption}</Option>
+                    ))}
+                </Select>
+                <Button type="primary" onClick={() => this.showDrawer(this.state.chooseMedia)}>编辑</Button>
+            </div>
+            {this.state.chooseMedia === null ? null : (
+                <Row gutter={6} style={{width: "80%", margin: "50px auto", textAlign: "left",}}>
+                    <Col span={6}>
+                        <img style={{}} height={300}
+                             src={this.state.chooseMedia.imgmedia}/>
+                    </Col>
+                    <Col span={2}>
+                        <Divider style={{border: "1px", height: 300}} type="vertical"/>
+                    </Col>
+                    <Col span={7}>
+                        <p><span style={{
+                            fontSize: "1.5em",
+                            fontWeight: 2
+                        }}>{this.state.chooseMedia.caption}</span></p>
+                        <p> 隶属：{this.state.chooseMedia.encategory}</p>
+                        <p> 上映时间：{this.state.chooseMedia.showtime}</p>
+                        <p> 客户端状态：<Select style={{width: 100}} defaultValue={this.state.chooseMedia.status}
+                                          onChange={(value) => {
+                                              const _this = this;
+                                              axios.post("http://localhost:8080/media/delete", {
+                                                  enmedia: _this.state.chooseMedia.enmedia,
+                                                  status: value
+                                              }, {
+                                                  // 单独配置
+                                                  withCredentials: true
+                                              }).then(function (response) {
+                                                  alert(response.data.msg);
+                                                  if (response.data.code === 1) {
+                                                      _this.getData();
+                                                  }
+                                              }).catch(function (error) {
+                                                  console.log(error);
+                                              })
+                                          }}>
+                            <Option key={1} value={1}>启用</Option>
+                            <Option key={0} value={0}>禁用</Option>
+                        </Select>
+                        </p>
+                        <p>简介：{this.state.chooseMedia.summary}</p>
+                    </Col>
+                    <Col span={2}>
+                        <Divider style={{border: "1px", height: 300}} type="vertical"/>
+                    </Col>
+                    <Col span={7}>
+                        {this.state.chooseArticle === null ? (
+                            <p><span style={{
+                                fontSize: "1.5em",
+                                fontWeight: 2
+                            }}>暂无影评介绍</span></p>
+                        ) : (
+                            <div>
+                                <p><span style={{
+                                    fontSize: "1.5em",
+                                    fontWeight: 2
+                                }}>{this.state.chooseArticle.title}</span></p>
+                                <p>隶属：{this.state.chooseArticle.encategory}</p>
+                                <p>发布时间：{moment(parseInt(this.state.chooseArticle.createtime)).format('YYYY-MM-DD HH:mm')}</p>
+                                <p>简介：{this.state.chooseArticle.summary}</p>
+                                <p>
+                                    <a href={"javascript:;"}
+                                       onClick={() => {
+                                           const _this = this;
+                                           if (_this.state.chooseMedia.enarticle != null) {
+                                               axios.post("http://localhost:8080/article/primary", {
+                                                   enarticle: _this.state.chooseMedia.enarticle
+                                               }).then(function (response) {
+                                                   _this.props.history.push({
+                                                       pathname: "readArticle",
+                                                       state: {
+                                                           htmlData: response.data,
+                                                       }
+                                                   })
+                                               }).catch(function (error) {
+                                                   console.log(error)
+                                               })
+                                           }
+                                       }
+                                       }>
+                                        阅读全文
+                                    </a>
+                                </p>
+                            </div>
+                        )}
+                    </Col>
+                </Row>
+            )}
+
+
             {this.state.medias.length === 0 ? saveButton : null}
             <Drawer
                 title="Create or Update"
@@ -321,9 +472,15 @@ class Media extends Component {
                         <Col span={12}>
                             <Form.Item label="enArticle">
                                 {getFieldDecorator('enarticle', {
-                                    rules: [{required: false, message: '请输入关联文章标识'}],
+                                    rules: [{required: false, message: '请选择关联文章标识'}],
                                     initialValue: this.state.record.enarticle,
-                                })(<Input placeholder="请输入关联文章标识"/>)}
+                                })(<Select placeholder="请选择关联文章">
+                                    {this.state.articles.map((article) => (
+                                        article.encategory === "film" ?
+                                            <Option key={article.enarticle}
+                                                    value={article.enarticle}>{article.title}</Option> : null
+                                    ))}
+                                </Select>)}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -461,6 +618,51 @@ class Media extends Component {
                                     ],
                                     initialValue: this.state.record.summary,
                                 })(<Input.TextArea rows={4} placeholder="添加描述"/>)}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item label="BluRay 720P">
+                                {getFieldDecorator('bluray720', {
+                                    rules: [
+                                        {
+                                            required: false,
+                                            message: '蓝光720',
+                                        },
+                                    ],
+                                    initialValue: this.state.record.summary,
+                                })(<Input.TextArea rows={2} placeholder="蓝光720"/>)}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item label="BluRay 1080P">
+                                {getFieldDecorator('bluray1080', {
+                                    rules: [
+                                        {
+                                            required: false,
+                                            message: '蓝光1080',
+                                        },
+                                    ],
+                                    initialValue: this.state.record.summary,
+                                })(<Input.TextArea rows={2} placeholder="蓝光1080"/>)}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            <Form.Item label="BluRay Disk">
+                                {getFieldDecorator('bluraydisk', {
+                                    rules: [
+                                        {
+                                            required: false,
+                                            message: '蓝光原盘',
+                                        },
+                                    ],
+                                    initialValue: this.state.record.summary,
+                                })(<Input.TextArea rows={2} placeholder="蓝光原盘"/>)}
                             </Form.Item>
                         </Col>
                     </Row>
