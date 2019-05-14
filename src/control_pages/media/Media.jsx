@@ -373,9 +373,17 @@ class Media extends Component {
                             fontSize: "1.5em",
                             fontWeight: 2
                         }}>{this.state.chooseMedia.caption}</span></p>
-                        <p> 隶属：{this.state.chooseMedia.encategory}</p>
+                        <p> 隶属：{() => {
+                            const newData = [...this.state.categories];
+                            let key = this.state.chooseMedia.encategory;
+                            const index = newData.findIndex(item => key === item.key);
+                            if (index > -1) {
+                                return this.state.categories[index].caption;
+                            }
+                        }
+                        }</p>
                         <p> 上映时间：{this.state.chooseMedia.showtime}</p>
-                        <p> 客户端状态：<Select style={{width: 100}} defaultValue={this.state.chooseMedia.status}
+                        <div> 客户端状态：<Select style={{width: 100}} defaultValue={this.state.chooseMedia.status}
                                           onChange={(value) => {
                                               const _this = this;
                                               axios.post("http://localhost:8080/media/delete", {
@@ -396,7 +404,7 @@ class Media extends Component {
                             <Option key={1} value={1}>启用</Option>
                             <Option key={0} value={0}>禁用</Option>
                         </Select>
-                        </p>
+                        </div>
                         <p>简介：{this.state.chooseMedia.summary}</p>
                     </Col>
                     <Col span={2}>
@@ -414,9 +422,10 @@ class Media extends Component {
                                     fontSize: "1.5em",
                                     fontWeight: 2
                                 }}>{this.state.chooseArticle.title}</span></p>
-                                <p>隶属：{this.state.chooseArticle.encategory}</p>
+                                <p>作者：{this.state.chooseArticle.author}</p>
                                 <p>发布时间：{moment(parseInt(this.state.chooseArticle.createtime)).format('YYYY-MM-DD HH:mm')}</p>
                                 <p>简介：{this.state.chooseArticle.summary}</p>
+                                <p>分类：{this.state.chooseArticle.encategory}</p>
                                 <p>
                                     <a href={"javascript:;"}
                                        onClick={() => {
