@@ -100,12 +100,12 @@ class Login extends Component {
                     </Content>
                 </Layout>
                 <Modal
-                    title="Administrator Login"
+                    title="控制台"
                     visible={this.state.visible}
                     footer={null}
                     onCancel={this.handleCancel}
                 >
-                    <Form onSubmit={this.handleSubmit} className="login-form">
+                    <Form style={{width: "80%", margin: "0 auto",}} onSubmit={this.handleSubmit} className="login-form">
                         <Form.Item
                             validateStatus={userNameError ? 'error' : ''}
                             help={userNameError || ''}
@@ -114,7 +114,7 @@ class Login extends Component {
                                 rules: [{required: true, message: '请输入管理员账号!'}],
                             })(
                                 <Input prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                       placeholder="Account"/>
+                                       placeholder="账号"/>
                             )}
                         </Form.Item>
                         <Form.Item
@@ -125,12 +125,19 @@ class Login extends Component {
                                 rules: [{required: true, message: '请输入管理员密码!'}],
                             })(
                                 <Input prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>} type="password"
-                                       placeholder="Password"/>
+                                       placeholder="密码"/>
                             )}
                         </Form.Item>
                         <Form.Item>
                             <Button
-                                style={{width: "100%"}}
+                                style={{width: "20%", marginRight: "10%",}}
+                                type="primary"
+                                onClick={this.handleCancel}
+                            >
+                                取消
+                            </Button>
+                            <Button
+                                style={{width: "70%"}}
                                 type="primary"
                                 htmlType="submit"
                                 disabled={hasErrors(getFieldsError())}

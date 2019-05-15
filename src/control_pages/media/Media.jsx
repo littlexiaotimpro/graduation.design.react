@@ -331,7 +331,7 @@ class Media extends Component {
             <div style={{width: "80%", margin: "0 auto",}}>
                 <Select showSearch
                         style={{width: 200, marginRight: 20,}}
-                        placeholder="Select a person"
+                        placeholder="Select a media"
                         optionFilterProp="children"
                         defaultValue={"iron_man"}
                         filterOption={(input, option) =>
