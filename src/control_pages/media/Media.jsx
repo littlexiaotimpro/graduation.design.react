@@ -4,7 +4,7 @@ import axios from "axios";
 import {Button, Table, Select, Drawer, Form, Col, Row, Input, Upload, Modal, Icon, Divider} from 'antd';
 import "./less/Media.css";
 
-const Option = Select.Option;
+const {Option,} = Select;
 
 class Media extends Component {
     constructor(props) {
@@ -329,29 +329,37 @@ class Media extends Component {
             {/*scroll={{x: 1850}}*/}
             {/*/>*/}
             <div style={{width: "80%", margin: "0 auto",}}>
-                <Select style={{width: 200, marginRight: 20,}} defaultValue={"iron_man"} onChange={(value) => {
-                    // 初始化电影数据
-                    const newData = [...this.state.medias];
-                    let key = value;
-                    const index = newData.findIndex(item => key === item.key);
-                    let m = null;
-                    if (index > -1) {
-                        m = this.state.medias[index];
-                    }
-                    // 初始化影评数据
-                    const newArticleData = [...this.state.articles];
-                    let keyArticle = m.enarticle;
-                    const indexArticle = newArticleData.findIndex(item => keyArticle === item.key);
-                    let art = null;
-                    if (indexArticle > -1) {
-                        art = this.state.articles[indexArticle];
-                    }
-                    this.setState({
-                        chooseKey: value,
-                        chooseMedia: m,
-                        chooseArticle: art
-                    })
-                }}>
+                <Select showSearch
+                        style={{width: 200, marginRight: 20,}}
+                        placeholder="Select a person"
+                        optionFilterProp="children"
+                        defaultValue={"iron_man"}
+                        filterOption={(input, option) =>
+                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        onChange={(value) => {
+                            // 初始化电影数据
+                            const newData = [...this.state.medias];
+                            let key = value;
+                            const index = newData.findIndex(item => key === item.key);
+                            let m = null;
+                            if (index > -1) {
+                                m = this.state.medias[index];
+                            }
+                            // 初始化影评数据
+                            const newArticleData = [...this.state.articles];
+                            let keyArticle = m.enarticle;
+                            const indexArticle = newArticleData.findIndex(item => keyArticle === item.key);
+                            let art = null;
+                            if (indexArticle > -1) {
+                                art = this.state.articles[indexArticle];
+                            }
+                            this.setState({
+                                chooseKey: value,
+                                chooseMedia: m,
+                                chooseArticle: art
+                            })
+                        }}>
                     {this.state.medias.map((media) => (
                         <Option key={media.enmedia}
                                 value={media.enmedia}>{media.caption}</Option>
@@ -373,34 +381,28 @@ class Media extends Component {
                             fontSize: "1.5em",
                             fontWeight: 2
                         }}>{this.state.chooseMedia.caption}</span></p>
-                        <p> 隶属：{() => {
-                            const newData = [...this.state.categories];
-                            let key = this.state.chooseMedia.encategory;
-                            const index = newData.findIndex(item => key === item.key);
-                            if (index > -1) {
-                                return this.state.categories[index].caption;
-                            }
-                        }
-                        }</p>
+                        {this.state.categories.map(cate => (
+                            cate.encategory === this.state.chooseMedia.encategory ? <p key={cate.encategory}> 隶属：{cate.caption}</p> : null
+                        ))}
                         <p> 上映时间：{this.state.chooseMedia.showtime}</p>
                         <div> 客户端状态：<Select style={{width: 100}} defaultValue={this.state.chooseMedia.status}
-                                          onChange={(value) => {
-                                              const _this = this;
-                                              axios.post("http://localhost:8080/media/delete", {
-                                                  enmedia: _this.state.chooseMedia.enmedia,
-                                                  status: value
-                                              }, {
-                                                  // 单独配置
-                                                  withCredentials: true
-                                              }).then(function (response) {
-                                                  alert(response.data.msg);
-                                                  if (response.data.code === 1) {
-                                                      _this.getData();
-                                                  }
-                                              }).catch(function (error) {
-                                                  console.log(error);
-                                              })
-                                          }}>
+                                            onChange={(value) => {
+                                                const _this = this;
+                                                axios.post("http://localhost:8080/media/delete", {
+                                                    enmedia: _this.state.chooseMedia.enmedia,
+                                                    status: value
+                                                }, {
+                                                    // 单独配置
+                                                    withCredentials: true
+                                                }).then(function (response) {
+                                                    alert(response.data.msg);
+                                                    if (response.data.code === 1) {
+                                                        _this.getData();
+                                                    }
+                                                }).catch(function (error) {
+                                                    console.log(error);
+                                                })
+                                            }}>
                             <Option key={1} value={1}>启用</Option>
                             <Option key={0} value={0}>禁用</Option>
                         </Select>
@@ -425,7 +427,10 @@ class Media extends Component {
                                 <p>作者：{this.state.chooseArticle.author}</p>
                                 <p>发布时间：{moment(parseInt(this.state.chooseArticle.createtime)).format('YYYY-MM-DD HH:mm')}</p>
                                 <p>简介：{this.state.chooseArticle.summary}</p>
-                                <p>分类：{this.state.chooseArticle.encategory}</p>
+                                {this.state.categories.map(cate => (
+                                    cate.encategory === this.state.chooseArticle.encategory ?
+                                        <p key={cate.encategory}> 分类：{cate.caption}</p> : null
+                                ))}
                                 <p>
                                     <a href={"javascript:;"}
                                        onClick={() => {
