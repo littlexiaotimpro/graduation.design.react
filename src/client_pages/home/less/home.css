@@ -2,10 +2,22 @@
   margin: 0;
   padding: 0;
 }
+.card-box {
+  text-align: center;
+}
 .card-box p {
   text-align: center;
   font-size: 1.3em;
   margin-top: 30px;
+}
+.btn-hover {
+  border: 1px solid black;
+  outline-style: none;
+  color: black;
+}
+.btn-hover:hover {
+  background: black;
+  color: #fff;
 }
 .contact-carousel .contact-slick-slide {
   text-align: center;
